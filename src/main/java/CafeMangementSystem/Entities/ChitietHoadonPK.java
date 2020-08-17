@@ -1,30 +1,30 @@
-package CafeMangementSystem;
+package CafeMangementSystem.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 public class ChitietHoadonPK implements Serializable {
-    private Object mahoadon;
-    private Object mamon;
+    private Integer mahoadon;
+    private Integer mamon;
 
     @Column(name = "mahoadon", nullable = false)
     @Id
-    public Object getMahoadon() {
+    public Integer getMahoadon() {
         return mahoadon;
     }
 
-    public void setMahoadon(Object mahoadon) {
+    public void setMahoadon(Integer mahoadon) {
         this.mahoadon = mahoadon;
     }
 
     @Column(name = "mamon", nullable = false)
     @Id
-    public Object getMamon() {
+    public Integer getMamon() {
         return mamon;
     }
 
-    public void setMamon(Object mamon) {
+    public void setMamon(Integer mamon) {
         this.mamon = mamon;
     }
 

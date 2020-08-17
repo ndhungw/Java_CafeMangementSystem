@@ -1,4 +1,4 @@
-package CafeMangementSystem;
+package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -6,24 +6,24 @@ import java.util.Collection;
 
 @Entity
 public class Nhanvien {
-    private Object manv;
+    private Integer manv;
     private String tennv;
     private Timestamp ngaysinh;
     private String dienthoai;
     private String diachi;
     private String tendangnhap;
     private String matkhau;
-    private Object chucvu;
+    private ChucVu chucvu;
     private Byte trangthai;
     private Collection<Hoadon> hoadonsByManv;
 
     @Id
     @Column(name = "manv", nullable = false)
-    public Object getManv() {
+    public Integer getManv() {
         return manv;
     }
 
-    public void setManv(Object manv) {
+    public void setManv(Integer manv) {
         this.manv = manv;
     }
 
@@ -89,11 +89,11 @@ public class Nhanvien {
 
     @Basic
     @Column(name = "chucvu", nullable = false)
-    public Object getChucvu() {
+    public ChucVu getChucvu() {
         return chucvu;
     }
 
-    public void setChucvu(Object chucvu) {
+    public void setChucvu(ChucVu chucvu) {
         this.chucvu = chucvu;
     }
 

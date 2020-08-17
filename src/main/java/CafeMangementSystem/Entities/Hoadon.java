@@ -1,4 +1,4 @@
-package CafeMangementSystem;
+package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -6,23 +6,23 @@ import java.util.Collection;
 
 @Entity
 public class Hoadon {
-    private Object mahoadon;
+    private Integer mahoadon;
     private Integer mucgiamgia;
     private Double thanhtien;
     private Double tientra;
     private Double tienthoi;
     private Timestamp ngaygiaodich;
-    private Object nvlaphoadon;
+    private Integer nvlaphoadon;
     private Collection<ChitietHoadon> chitietHoadonsByMahoadon;
     private Nhanvien nhanvienByNvlaphoadon;
 
     @Id
     @Column(name = "mahoadon", nullable = false)
-    public Object getMahoadon() {
+    public Integer getMahoadon() {
         return mahoadon;
     }
 
-    public void setMahoadon(Object mahoadon) {
+    public void setMahoadon(Integer mahoadon) {
         this.mahoadon = mahoadon;
     }
 
@@ -78,11 +78,11 @@ public class Hoadon {
 
     @Basic
     @Column(name = "nvlaphoadon", nullable = false)
-    public Object getNvlaphoadon() {
+    public Integer getNvlaphoadon() {
         return nvlaphoadon;
     }
 
-    public void setNvlaphoadon(Object nvlaphoadon) {
+    public void setNvlaphoadon(Integer nvlaphoadon) {
         this.nvlaphoadon = nvlaphoadon;
     }
 
@@ -127,7 +127,7 @@ public class Hoadon {
     }
 
     @ManyToOne
-    @JoinColumn(name = "nvlaphoadon", referencedColumnName = "manv", nullable = false)
+    @JoinColumn(name = "nvlaphoadon", referencedColumnName = "manv", nullable = false, insertable = false, updatable = false)
     public Nhanvien getNhanvienByNvlaphoadon() {
         return nhanvienByNvlaphoadon;
     }

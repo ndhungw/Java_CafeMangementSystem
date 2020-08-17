@@ -1,13 +1,13 @@
-package CafeMangementSystem;
+package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "chitiet_hoadon", schema = "quancafe", catalog = "")
+@Table(name = "chitiet_hoadon", schema = "quancafe")
 @IdClass(ChitietHoadonPK.class)
 public class ChitietHoadon {
-    private Object mahoadon;
-    private Object mamon;
+    private Integer mahoadon;
+    private Integer mamon;
     private Integer soluong;
     private Double giaban;
     private Double tongtien;
@@ -16,21 +16,21 @@ public class ChitietHoadon {
 
     @Id
     @Column(name = "mahoadon", nullable = false)
-    public Object getMahoadon() {
+    public Integer getMahoadon() {
         return mahoadon;
     }
 
-    public void setMahoadon(Object mahoadon) {
+    public void setMahoadon(Integer mahoadon) {
         this.mahoadon = mahoadon;
     }
 
     @Id
     @Column(name = "mamon", nullable = false)
-    public Object getMamon() {
+    public Integer getMamon() {
         return mamon;
     }
 
-    public void setMamon(Object mamon) {
+    public void setMamon(Integer mamon) {
         this.mamon = mamon;
     }
 
@@ -91,7 +91,7 @@ public class ChitietHoadon {
     }
 
     @ManyToOne
-    @JoinColumn(name = "mahoadon", referencedColumnName = "mahoadon", nullable = false)
+    @JoinColumn(name = "mahoadon", referencedColumnName = "mahoadon", nullable = false, insertable = false, updatable = false)
     public Hoadon getHoadonByMahoadon() {
         return hoadonByMahoadon;
     }
@@ -101,7 +101,7 @@ public class ChitietHoadon {
     }
 
     @ManyToOne
-    @JoinColumn(name = "mamon", referencedColumnName = "mamon", nullable = false)
+    @JoinColumn(name = "mamon", referencedColumnName = "mamon", nullable = false, insertable = false, updatable = false)
     public Monmenu getMonmenuByMamon() {
         return monmenuByMamon;
     }

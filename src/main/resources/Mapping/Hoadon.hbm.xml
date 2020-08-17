@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="CafeMangementSystem.Hoadon" table="hoadon" schema="quancafe">
+    <class name="CafeMangementSystem.Entities.Hoadon" table="hoadon" schema="quancafe">
         <id name="mahoadon">
             <column name="mahoadon" sql-type="int unsigned"/>
         </id>
@@ -26,14 +26,14 @@
         <property name="nvlaphoadon">
             <column name="nvlaphoadon" sql-type="int unsigned"/>
         </property>
-        <many-to-one name="nhanvienByNvlaphoadon" class="CafeMangementSystem.Nhanvien">
+        <many-to-one name="nhanvienByNvlaphoadon" class="CafeMangementSystem.Entities.Nhanvien">
             <column name="nvlaphoadon"/>
         </many-to-one>
         <set name="chitietHoadonsByMahoadon" inverse="true">
             <key>
                 <column name="mahoadon"/>
             </key>
-            <one-to-many not-found="ignore" class="CafeMangementSystem.ChitietHoadon"/>
+            <one-to-many not-found="ignore" class="CafeMangementSystem.Entities.ChitietHoadon"/>
         </set>
     </class>
 </hibernate-mapping>

@@ -1,11 +1,11 @@
-package CafeMangementSystem;
+package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 public class Monmenu {
-    private Object mamon;
+    private Integer mamon;
     private String tenmon;
     private Double giaban;
     private Byte trangthai;
@@ -15,11 +15,11 @@ public class Monmenu {
 
     @Id
     @Column(name = "mamon", nullable = false)
-    public Object getMamon() {
+    public Integer getMamon() {
         return mamon;
     }
 
-    public void setMamon(Object mamon) {
+    public void setMamon(Integer mamon) {
         this.mamon = mamon;
     }
 

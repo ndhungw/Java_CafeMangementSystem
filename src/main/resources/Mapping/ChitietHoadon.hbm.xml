@@ -4,8 +4,8 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="CafeMangementSystem.ChitietHoadon" table="chitiet_hoadon" schema="quancafe">
-        <composite-id mapped="true" class="CafeMangementSystem.ChitietHoadonPK">
+    <class name="CafeMangementSystem.Entities.ChitietHoadon" table="chitiet_hoadon" schema="quancafe">
+        <composite-id mapped="true" class="CafeMangementSystem.Entities.ChitietHoadonPK">
             <key-property name="mahoadon">
                 <column name="mahoadon" sql-type="int unsigned"/>
             </key-property>
@@ -22,10 +22,10 @@
         <property name="tongtien">
             <column name="tongtien" sql-type="float" precision="-1"/>
         </property>
-        <many-to-one name="hoadonByMahoadon" class="CafeMangementSystem.Hoadon">
+        <many-to-one name="hoadonByMahoadon" class="CafeMangementSystem.Entities.Hoadon">
             <column name="mahoadon"/>
         </many-to-one>
-        <many-to-one name="monmenuByMamon" class="CafeMangementSystem.Monmenu">
+        <many-to-one name="monmenuByMamon" class="CafeMangementSystem.Entities.Monmenu">
             <column name="mamon"/>
         </many-to-one>
     </class>

@@ -1,24 +1,24 @@
-package CafeMangementSystem;
+package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "lichsu_giamon", schema = "quancafe", catalog = "")
+@Table(name = "lichsu_giamon", schema = "quancafe")
 @IdClass(LichsuGiamonPK.class)
 public class LichsuGiamon {
-    private Object mamon;
+    private Integer mamon;
     private Timestamp thoidiemcapnhat;
     private Double giacapnhat;
     private Monmenu monmenuByMamon;
 
     @Id
     @Column(name = "mamon", nullable = false)
-    public Object getMamon() {
+    public Integer getMamon() {
         return mamon;
     }
 
-    public void setMamon(Object mamon) {
+    public void setMamon(Integer mamon) {
         this.mamon = mamon;
     }
 
@@ -66,7 +66,7 @@ public class LichsuGiamon {
     }
 
     @ManyToOne
-    @JoinColumn(name = "mamon", referencedColumnName = "mamon", nullable = false)
+    @JoinColumn(name = "mamon", referencedColumnName = "mamon", nullable = false, insertable=false, updatable=false)
     public Monmenu getMonmenuByMamon() {
         return monmenuByMamon;
     }

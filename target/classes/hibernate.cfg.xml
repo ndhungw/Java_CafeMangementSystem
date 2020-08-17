@@ -22,11 +22,11 @@
         <property name="show_sql">true</property>
 
         <!--Mapping-->
-        <mapping class="CafeMangementSystem.Nhanvien"/>
-        <mapping class="CafeMangementSystem.Hoadon"/>
-        <mapping class="CafeMangementSystem.ChitietHoadon"/>
-        <mapping class="CafeMangementSystem.Monmenu"/>
-        <mapping class="CafeMangementSystem.LichsuGiamon"/>
+        <mapping class="CafeMangementSystem.Entities.Nhanvien"/>
+        <mapping class="CafeMangementSystem.Entities.Hoadon"/>
+        <mapping class="CafeMangementSystem.Entities.ChitietHoadon"/>
+        <mapping class="CafeMangementSystem.Entities.Monmenu"/>
+        <mapping class="CafeMangementSystem.Entities.LichsuGiamon"/>
 
 <!--        <mapping resource="Mapping/Nhanvien.hbm.xml"/>-->
 <!--        <mapping resource="Mapping/Hoadon.hbm.xml"/>-->

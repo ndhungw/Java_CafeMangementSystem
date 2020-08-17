@@ -1,4 +1,4 @@
-package CafeMangementSystem;
+package CafeMangementSystem.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -6,16 +6,16 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class LichsuGiamonPK implements Serializable {
-    private Object mamon;
+    private Integer mamon;
     private Timestamp thoidiemcapnhat;
 
     @Column(name = "mamon", nullable = false)
     @Id
-    public Object getMamon() {
+    public Integer getMamon() {
         return mamon;
     }
 
-    public void setMamon(Object mamon) {
+    public void setMamon(Integer mamon) {
         this.mamon = mamon;
     }
 

@@ -4,8 +4,8 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="CafeMangementSystem.LichsuGiamon" table="lichsu_giamon" schema="quancafe">
-        <composite-id mapped="true" class="CafeMangementSystem.LichsuGiamonPK">
+    <class name="CafeMangementSystem.Entities.LichsuGiamon" table="lichsu_giamon" schema="quancafe">
+        <composite-id mapped="true" class="CafeMangementSystem.Entities.LichsuGiamonPK">
             <key-property name="mamon">
                 <column name="mamon" sql-type="int unsigned"/>
             </key-property>
@@ -16,7 +16,7 @@
         <property name="giacapnhat">
             <column name="giacapnhat" sql-type="float" precision="-1"/>
         </property>
-        <many-to-one name="monmenuByMamon" class="CafeMangementSystem.Monmenu">
+        <many-to-one name="monmenuByMamon" class="CafeMangementSystem.Entities.Monmenu">
             <column name="mamon"/>
         </many-to-one>
     </class>
