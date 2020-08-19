@@ -51,6 +51,5 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:14.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:14.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:14.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.4.17.Final" level="project" />
   </component>
 </module>
