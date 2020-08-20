@@ -1,21 +1,39 @@
 package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
+
 
 @Entity
 public class Nhanvien {
     private Integer manv;
     private String tennv;
-    private Timestamp ngaysinh;
+    private Date ngaysinh;
     private String dienthoai;
     private String diachi;
     private String tendangnhap;
     private String matkhau;
-    private ChucVu chucvu;
-    private Byte trangthai;
+//    @Enumerated(EnumType.STRING) - because of using Attribute Converter then we do not need
+    private String chucvu;
+    private Boolean trangthai;
     private Collection<Hoadon> hoadonsByManv;
+
+    public Nhanvien() {
+    }
+
+    public Nhanvien(Integer manv, String tennv, Date ngaysinh, String dienthoai, String diachi, String tendangnhap, String matkhau, String chucvu, Boolean trangthai) {
+        this.manv = manv;
+        this.tennv = tennv;
+        this.ngaysinh = ngaysinh;
+        this.dienthoai = dienthoai;
+        this.diachi = diachi;
+        this.tendangnhap = tendangnhap;
+        this.matkhau = matkhau;
+        this.chucvu = chucvu;
+        this.trangthai = trangthai;
+    }
 
     @Id
     @Column(name = "manv", nullable = false)
@@ -39,11 +57,11 @@ public class Nhanvien {
 
     @Basic
     @Column(name = "ngaysinh", nullable = false)
-    public Timestamp getNgaysinh() {
+    public Date getNgaysinh() {
         return ngaysinh;
     }
 
-    public void setNgaysinh(Timestamp ngaysinh) {
+    public void setNgaysinh(Date ngaysinh) {
         this.ngaysinh = ngaysinh;
     }
 
@@ -89,21 +107,21 @@ public class Nhanvien {
 
     @Basic
     @Column(name = "chucvu", nullable = false)
-    public ChucVu getChucvu() {
+    public String getChucvu() {
         return chucvu;
     }
 
-    public void setChucvu(ChucVu chucvu) {
+    public void setChucvu(String chucvu) {
         this.chucvu = chucvu;
     }
 
     @Basic
     @Column(name = "trangthai", nullable = false)
-    public Byte getTrangthai() {
+    public Boolean getTrangthai() {
         return trangthai;
     }
 
-    public void setTrangthai(Byte trangthai) {
+    public void setTrangthai(Boolean trangthai) {
         this.trangthai = trangthai;
     }
 
@@ -149,5 +167,30 @@ public class Nhanvien {
 
     public void setHoadonsByManv(Collection<Hoadon> hoadonsByManv) {
         this.hoadonsByManv = hoadonsByManv;
+    }
+
+    // tu viet them
+
+    @Override
+    public String toString() {
+        return " MaNv: " + this.manv +
+                " | TenNv: " + this.tennv +
+                " | SDT: " + this.dienthoai +
+                " | Dia chi: " + this.diachi +
+                " | Ngay sinh: " + this.ngaysinh.toString() +
+                " | Chuc vu: " + this.chucvu +
+                " | Trang thai: " + (this.trangthai ? "Active" : "Blocked");
+    }
+
+    public void setALlNewValue(Nhanvien newObj) {
+        // this.manv
+        this.tennv = newObj.tennv;
+        this.ngaysinh = newObj.ngaysinh;
+        this.dienthoai = newObj.dienthoai;
+        this.diachi = newObj.diachi;
+        this.tendangnhap = newObj.tendangnhap;
+        this.matkhau = newObj.matkhau;
+        this.chucvu = newObj.chucvu;
+        this.trangthai = newObj.trangthai;
     }
 }
