@@ -9,6 +9,16 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class MonmenuDAO implements DAO<Monmenu> {
+    private static MonmenuDAO instance;
+    private MonmenuDAO() {
+    }
+    public static MonmenuDAO getInstance() {
+        if (instance == null) {
+            return (instance = new MonmenuDAO());
+        }
+        return instance;
+    }
+
     @Override
     public int getMaxId() {
         Session session = HibernateUtils.getSessionFactory().openSession();
@@ -18,7 +28,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
             Query query = session.createQuery(sql);
             returnValue = query.uniqueResult() == null ? -1 : (Integer) query.uniqueResult();
         }catch(Exception ex){
-            System.err.println(ex);
+            ex.printStackTrace();
         }
         return returnValue;
     }
@@ -32,7 +42,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
             Query query = session.createQuery(sql);
             result = query.list();
         }catch(Exception ex){
-            System.err.println(ex);
+            ex.printStackTrace();
         }
         return result;
     }
@@ -47,7 +57,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
             t.commit();
             return true;
         }catch(Exception ex){
-            System.err.println(ex);
+            ex.printStackTrace();
             if(t != null) t.rollback();
         }
         return false;
@@ -63,7 +73,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
             query.setParameter("id", id);
             result = (Monmenu) query.uniqueResult();
         }catch(Exception ex){
-            System.err.println(ex);
+            ex.printStackTrace();
         }
         return result;
     }
@@ -84,7 +94,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
             t.commit();
             return true;
         }catch(Exception ex){
-            System.err.println(ex);
+            ex.printStackTrace();
             if(t != null) t.rollback();
         }
         return false;
@@ -100,7 +110,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
             t.commit();
             return true;
         }catch(Exception ex){
-            System.err.println(ex);
+            ex.printStackTrace();
             if(t != null) t.rollback();
         }
         return false;

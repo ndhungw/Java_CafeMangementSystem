@@ -55,6 +55,7 @@ public class QuanLyMonAnController implements Initializable {
     }
 
     public void AddNewButton_Clicked(MouseEvent mouseEvent) {
+
     }
 
     public void RefreshButton_Clicked(MouseEvent mouseEvent) {
