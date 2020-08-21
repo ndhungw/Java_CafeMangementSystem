@@ -3,6 +3,7 @@ package CafeMangementSystem.Controllers;
 import CafeMangementSystem.DAOs.NhanvienDAO;
 import CafeMangementSystem.Entities.ChucVu;
 import CafeMangementSystem.Entities.Nhanvien;
+import CafeMangementSystem.Utils.Utilities;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -22,6 +23,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.net.URL;
 import java.sql.Date;
@@ -469,10 +471,6 @@ public class QLNhanVienController implements Initializable {
 
     @FXML
     private void createAccount(ActionEvent actionEvent) {
-        // Thêm dialog xác nhận về việc thêm các thông tin trên
-        //
-        //
-
         // Tạo đối tượng nhân viên mới
         Nhanvien newNhanvien;
 
@@ -480,6 +478,10 @@ public class QLNhanVienController implements Initializable {
         java.util.Date date =
                 java.util.Date.from(newNgaySinhDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date newNgaySinh = new Date(date.getTime());
+
+
+        // Hash password
+        String hashedPassword = BCrypt.hashpw(newMatKhauPwField.getText(), BCrypt.gensalt(10));
 
         // Create new account for new employee
         newNhanvien = new Nhanvien(
@@ -489,10 +491,17 @@ public class QLNhanVienController implements Initializable {
                 newDientThoaiTextField.getText(),
                 newDiaChiTextField.getText(),
                 newTenDangNhapTextField.getText(),
-                newMatKhauPwField.getText(),
+                hashedPassword,
                 newChucVuComboBox.getSelectionModel().getSelectedItem().getName(),
                 true // default is "active"
         );
+
+        // Thêm dialog xác nhận về việc thêm các thông tin trên
+        boolean confirm = Utilities.getInstance().showAlert(Alert.AlertType.CONFIRMATION,
+                quanLyNhanVienGridPane.getScene().getWindow(),
+                "Xác nhận thêm nhân viên", "Bạn chắc chắn muốn thêm nhân viên này?\n" + newNhanvien);
+
+        if (!confirm) { return; }
 
         boolean inserted = NhanvienDAO.getInstance().insert(newNhanvien);
 
@@ -531,14 +540,26 @@ public class QLNhanVienController implements Initializable {
     private void updatePassword (ActionEvent actionEvent) {
         if (!tenDangNhapTextField.getText().isEmpty()) {
             Nhanvien selectedNhanvien = nhanvienTableView.getSelectionModel().getSelectedItem();
-            selectedNhanvien.setMatkhau(matKhauMoi2TextField.getText());
+
+            boolean confirm = Utilities.getInstance().showAlert(Alert.AlertType.CONFIRMATION,
+                    quanLyNhanVienGridPane.getScene().getWindow(), "Xác nhận", "Xác nhận đổi mật khẩu?" );
+            if (!confirm) {
+                return;
+            }
+
+            String hashedPassword = BCrypt.hashpw(matKhauMoi2TextField.getText(), BCrypt.gensalt(10));
+            selectedNhanvien.setMatkhau(hashedPassword);
 
             boolean updated = NhanvienDAO.getInstance().update(selectedNhanvien.getManv(),selectedNhanvien);
 
             if (updated) {
                 System.out.println("Cập nhật mật khẩu thành công");
+                Utilities.getInstance().showAlert(Alert.AlertType.INFORMATION,
+                        quanLyNhanVienGridPane.getScene().getWindow(), "Thông báo", "Đổi mật khẩu thành công!" );
             } else {
                 System.out.println("Cập nhật mật khẩu thất bại");
+                Utilities.getInstance().showAlert(Alert.AlertType.INFORMATION,
+                        quanLyNhanVienGridPane.getScene().getWindow(), "Thông báo", "Đổi mật khẩu thất bại!" );
             }
         }
     }

@@ -58,7 +58,7 @@
                         <Label text="Nhập lại mật khẩu mới : " GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <PasswordField fx:id="matKhauMoi2TextField" promptText="Nhập lại mật khẩu mới" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <Button fx:id="updatePwButton" mnemonicParsing="false" onAction="#updatePassword" text="Cập nhật mật khẩu" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <Label fx:id="changePwMsgLabel" text="Chọn một nhân viên" textFill="DARKORANGE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                        <Label fx:id="changePwMsgLabel" text="Chọn một nhân viên" textFill="DARKORANGE" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>

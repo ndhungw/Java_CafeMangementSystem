@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
 import java.util.List;
 
 public class NhanvienDAO implements DAO<Nhanvien> {
@@ -181,5 +183,67 @@ public class NhanvienDAO implements DAO<Nhanvien> {
         }
 
         return nhanvienList;
+    }
+
+    // get hashed password saved in DB
+    public String getHashedPassword (String username) {
+        SessionFactory factory = HibernateUtils.getSessionFactory();
+        Session session = factory.getCurrentSession();
+
+        String hashedPassword = null;
+
+        try {
+            session.getTransaction().begin();
+
+//            StoredProcedureQuery sp_getHashedPassword = session.createStoredProcedureQuery("getHashedPassword");
+//            sp_getHashedPassword.registerStoredProcedureParameter("username",String.class, ParameterMode.IN);
+//            sp_getHashedPassword.registerStoredProcedureParameter("hashedPassword", String.class, ParameterMode.OUT);
+//
+//            sp_getHashedPassword.setParameter("username", username);
+//            sp_getHashedPassword.execute();
+//
+//            hashedPassword = (String) sp_getHashedPassword.getOutputParameterValue("hashedPassword");
+//            System.out.println("Hashed password: " + hashedPassword);
+
+            String sql = "select nv.matkhau from " + Nhanvien.class.getName() + " nv" +
+                    " where nv.tendangnhap = :username";
+            Query<String> query = session.createQuery(sql);
+            query.setParameter("username",username);
+            hashedPassword = query.getSingleResult();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+
+        return hashedPassword;
+    }
+
+    public Nhanvien getAccountForSession(String username, String password) {
+        SessionFactory factory = HibernateUtils.getSessionFactory();
+        Session session = factory.getCurrentSession();
+
+        Nhanvien nhanvien = null;
+
+        try {
+            session.getTransaction().begin();
+
+            String sql = "SELECT nv " +
+                    "FROM " + Nhanvien.class.getName() + " nv  " +
+                    "WHERE nv.tendangnhap = :usernameToCheck AND nv.matkhau = :passwordToCheck";
+
+            Query<Nhanvien> query = session.createQuery(sql);
+            query.setParameter("usernameToCheck", username);
+            query.setParameter("passwordToCheck", password);
+            nhanvien = query.getSingleResult();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+
+        return nhanvien;
     }
 }
