@@ -173,13 +173,14 @@ public class Nhanvien {
 
     @Override
     public String toString() {
-        return " MaNv: " + this.manv +
-                " | TenNv: " + this.tennv +
-                " | SDT: " + this.dienthoai +
-                " | Dia chi: " + this.diachi +
-                " | Ngay sinh: " + this.ngaysinh.toString() +
-                " | Chuc vu: " + this.chucvu +
-                " | Trang thai: " + (this.trangthai ? "Active" : "Blocked");
+//        return " MaNv: " + this.manv +
+//                " | TenNv: " + this.tennv +
+//                " | SDT: " + this.dienthoai +
+//                " | Dia chi: " + this.diachi +
+//                " | Ngay sinh: " + this.ngaysinh.toString() +
+//                " | Chuc vu: " + this.chucvu +
+//                " | Trang thai: " + (this.trangthai ? "Active" : "Blocked");
+        return this.tennv;
     }
 
     public void setALlNewValue(Nhanvien newObj) {
