@@ -1,9 +1,10 @@
 package CafeMangementSystem.Controllers;
 
 import CafeMangementSystem.DAOs.HoadonDAO;
+import CafeMangementSystem.DAOs.NhanvienDAO;
 import CafeMangementSystem.Entities.Hoadon;
-import CafeMangementSystem.Entities.Nhanvien;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,12 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 
@@ -62,8 +57,6 @@ public class ThongKeControllers implements Initializable {
     @FXML
     private TextField totalRevenueTextField;
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTable();
@@ -78,7 +71,13 @@ public class ThongKeControllers implements Initializable {
         tienTraCol.setCellValueFactory(new PropertyValueFactory<>("tientra"));
         tienThoiCol.setCellValueFactory(new PropertyValueFactory<>("tienthoi"));
         ngayGiaoDichCol.setCellValueFactory(new PropertyValueFactory<>("ngaygiaodich"));
-        nhanVienTaoCol.setCellValueFactory(new PropertyValueFactory<Hoadon, String>("nhanvienByNvlaphoadon"));
+        // gán một giá trị nào đó mà không cần thiết phải là một thuộc tính của entity đang đưa lên tableview
+        nhanVienTaoCol.setCellValueFactory((prop -> {
+            StringProperty stringProperty = new SimpleStringProperty();
+            Hoadon hoadon = prop.getValue();
+            stringProperty.setValue(NhanvienDAO.getInstance().get(hoadon.getNvlaphoadon()).getTennv());
+            return stringProperty;
+        }));
 
         // lấy dữ liệu các hóa đơn
         hoadonObservableList = FXCollections.observableList(HoadonDAO.getInstance().getAll());
@@ -91,29 +90,6 @@ public class ThongKeControllers implements Initializable {
         hoadonTableView.setItems(hoadonObservableList);
         totalRevenueTextField.setText(String.valueOf(totalRevenue));
         totalRevenueTextField.setEditable(false);
-
-
-        // lấy khoảng thời gian
-//        java.util.Date date =
-//                java.util.Date.from(fromDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-//        Date newNgaySinh = new Date(date.getTime());
-
-//        fromDayDatePicker.valueProperty().addListener(((observableValue, oldValue, newValue) -> {
-//            if (!newValue.toString().isEmpty()) {
-//                if (!toDayDatePicker.getValue().toString().isEmpty()) {
-//                    Date fromDay = Date.from(fromDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-//                    Date toDay = Date.from(toDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-//                    ObservableList<Hoadon> contextHoaDonList = FXCollections.observableList(HoadonDAO.getInstance().getAll(fromDay,toDay));
-//                    System.out.println("Danh sách hóa đơn:");
-//                    for (Hoadon hoadon : hoadonObservableList) {
-//                        System.out.println(hoadon);
-//                    }
-//                    hoadonTableView.setItems(hoadonObservableList);
-//                }
-//            }
-//        }));
-
-
     }
 
     public void reload(ActionEvent actionEvent) {
