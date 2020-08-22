@@ -1,6 +1,7 @@
 package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "chitiet_hoadon", schema = "quancafe")
@@ -9,8 +10,8 @@ public class ChitietHoadon {
     private Integer mahoadon;
     private Integer mamon;
     private Integer soluong;
-    private Double giaban;
-    private Double tongtien;
+    private BigDecimal giaban;
+    private BigDecimal tongtien;
     private Hoadon hoadonByMahoadon;
     private Monmenu monmenuByMamon;
 
@@ -45,22 +46,22 @@ public class ChitietHoadon {
     }
 
     @Basic
-    @Column(name = "giaban", nullable = true, precision = 0)
-    public Double getGiaban() {
+    @Column(name = "giaban", nullable = true)
+    public BigDecimal getGiaban() {
         return giaban;
     }
 
-    public void setGiaban(Double giaban) {
+    public void setGiaban(BigDecimal giaban) {
         this.giaban = giaban;
     }
 
     @Basic
-    @Column(name = "tongtien", nullable = false, precision = 0)
-    public Double getTongtien() {
+    @Column(name = "tongtien", nullable = false)
+    public BigDecimal getTongtien() {
         return tongtien;
     }
 
-    public void setTongtien(Double tongtien) {
+    public void setTongtien(BigDecimal tongtien) {
         this.tongtien = tongtien;
     }
 

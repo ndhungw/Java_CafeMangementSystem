@@ -1,19 +1,33 @@
 package CafeMangementSystem.Entities;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Collection;
 
 @Entity
 public class Monmenu {
     private Integer mamon;
     private String tenmon;
-    private Double giaban;
-    private Byte trangthai;
+    private BigDecimal giaban;
+    private Boolean trangthai;
     private String hinhanh;
     private Collection<ChitietHoadon> chitietHoadonsByMamon;
     private Collection<LichsuGiamon> lichsuGiamonsByMamon;
 
+    private BooleanProperty trangThaiBanProperty;
+    public BooleanProperty TrangThaiBanProperty() {
+        if(trangThaiBanProperty == null) {
+            //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            trangThaiBanProperty = new SimpleBooleanProperty(this.getTrangthai());
+        }
+        return trangThaiBanProperty;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mamon", nullable = false)
     public Integer getMamon() {
         return mamon;
@@ -34,22 +48,22 @@ public class Monmenu {
     }
 
     @Basic
-    @Column(name = "giaban", nullable = false, precision = 0)
-    public Double getGiaban() {
+    @Column(name = "giaban", nullable = false)
+    public BigDecimal getGiaban() {
         return giaban;
     }
 
-    public void setGiaban(Double giaban) {
+    public void setGiaban(BigDecimal giaban) {
         this.giaban = giaban;
     }
 
     @Basic
     @Column(name = "trangthai", nullable = false)
-    public Byte getTrangthai() {
+    public Boolean getTrangthai() {
         return trangthai;
     }
 
-    public void setTrangthai(Byte trangthai) {
+    public void setTrangthai(Boolean trangthai) {
         this.trangthai = trangthai;
     }
 
@@ -105,5 +119,17 @@ public class Monmenu {
 
     public void setLichsuGiamonsByMamon(Collection<LichsuGiamon> lichsuGiamonsByMamon) {
         this.lichsuGiamonsByMamon = lichsuGiamonsByMamon;
+    }
+
+    @Override
+    public String toString() {
+        return "Monmenu{" +
+                "mamon=" + mamon +
+                ", tenmon='" + tenmon + '\'' +
+                ", giaban=" + giaban +
+                ", trangthai=" + trangthai +
+                ", hinhanh='" + hinhanh + '\'' +
+                ", trangThaiBanProperty=" + trangThaiBanProperty +
+                '}';
     }
 }
