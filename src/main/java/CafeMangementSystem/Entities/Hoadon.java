@@ -1,6 +1,7 @@
 package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -8,9 +9,9 @@ import java.util.Collection;
 public class Hoadon {
     private Integer mahoadon;
     private Integer mucgiamgia;
-    private Double thanhtien;
-    private Double tientra;
-    private Double tienthoi;
+    private BigDecimal thanhtien;
+    private BigDecimal tientra;
+    private BigDecimal tienthoi;
     private Timestamp ngaygiaodich;
     private Integer nvlaphoadon;
     private Collection<ChitietHoadon> chitietHoadonsByMahoadon;
@@ -37,32 +38,32 @@ public class Hoadon {
     }
 
     @Basic
-    @Column(name = "thanhtien", nullable = false, precision = 0)
-    public Double getThanhtien() {
+    @Column(name = "thanhtien", nullable = false)
+    public BigDecimal getThanhtien() {
         return thanhtien;
     }
 
-    public void setThanhtien(Double thanhtien) {
+    public void setThanhtien(BigDecimal thanhtien) {
         this.thanhtien = thanhtien;
     }
 
     @Basic
-    @Column(name = "tientra", nullable = false, precision = 0)
-    public Double getTientra() {
+    @Column(name = "tientra", nullable = false)
+    public BigDecimal getTientra() {
         return tientra;
     }
 
-    public void setTientra(Double tientra) {
+    public void setTientra(BigDecimal tientra) {
         this.tientra = tientra;
     }
 
     @Basic
-    @Column(name = "tienthoi", nullable = false, precision = 0)
-    public Double getTienthoi() {
+    @Column(name = "tienthoi", nullable = false)
+    public BigDecimal getTienthoi() {
         return tienthoi;
     }
 
-    public void setTienthoi(Double tienthoi) {
+    public void setTienthoi(BigDecimal tienthoi) {
         this.tienthoi = tienthoi;
     }
 

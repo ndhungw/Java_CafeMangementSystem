@@ -1,6 +1,7 @@
 package CafeMangementSystem.Entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -9,7 +10,7 @@ import java.sql.Timestamp;
 public class LichsuGiamon {
     private Integer mamon;
     private Timestamp thoidiemcapnhat;
-    private Double giacapnhat;
+    private BigDecimal giacapnhat;
     private Monmenu monmenuByMamon;
 
     @Id
@@ -33,12 +34,12 @@ public class LichsuGiamon {
     }
 
     @Basic
-    @Column(name = "giacapnhat", nullable = false, precision = 0)
-    public Double getGiacapnhat() {
+    @Column(name = "giacapnhat", nullable = false)
+    public BigDecimal getGiacapnhat() {
         return giacapnhat;
     }
 
-    public void setGiacapnhat(Double giacapnhat) {
+    public void setGiacapnhat(BigDecimal giacapnhat) {
         this.giacapnhat = giacapnhat;
     }
 
