@@ -1,6 +1,8 @@
 package CafeMangementSystem.Controllers;
 
+import CafeMangementSystem.DAOs.LichsuGiamonDAO;
 import CafeMangementSystem.DAOs.MonmenuDAO;
+import CafeMangementSystem.Entities.LichsuGiamon;
 import CafeMangementSystem.Entities.Monmenu;
 import CafeMangementSystem.Utils.BigDecimalTextFormatter;
 import CafeMangementSystem.Utils.Globals;
@@ -42,6 +44,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -88,15 +92,19 @@ public class QuanLyMonAnController implements Initializable {
     @FXML
     private Label ChiTietMonAn_TrangThaiBan;
     @FXML
-    private Button DetailsButton;
-    @FXML
-    private TableColumn<Monmenu, Void> clmSelect;
-    @FXML
     private Button DeselectButton;
     @FXML
     private HBox SearchArea;
     @FXML
     private Label selectPromptLabel;
+    @FXML
+    private TableView<LichsuGiamon> LichSuGia_Table;
+    @FXML
+    private TableColumn<LichsuGiamon, Timestamp> clmThoiDiem;
+    @FXML
+    private TableColumn<LichsuGiamon, BigDecimal> clmGiaTaiThoiDiem;
+    @FXML
+    private TableColumn<Monmenu, Void> clmSeeDetails;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -353,18 +361,87 @@ public class QuanLyMonAnController implements Initializable {
             return cell;
         });
 
-        clmSelect.setReorderable(false);
-        clmSelect.setCellFactory(t->{
+        clmThoiDiem.setCellValueFactory(new PropertyValueFactory<>("thoidiemcapnhat"));
+        clmThoiDiem.setReorderable(false);
+        clmThoiDiem.setCellFactory(t->{
+            TableCell<LichsuGiamon, Timestamp> cell = new TableCell<>(){
+                Text text = new Text();
+                {
+                    text.setTextAlignment(TextAlignment.CENTER);
+                }
+
+                @Override
+                protected void updateItem(Timestamp item, boolean b) {
+                    super.updateItem(item, b);
+                    setPrefHeight(Control.USE_COMPUTED_SIZE);
+                    setAlignment(Pos.CENTER);
+
+                    text.wrappingWidthProperty().bind(widthProperty());
+                    text.textProperty().bind(Bindings.createStringBinding(() ->{
+                        if (getItem() == null) {
+                            return null;
+                        } else {
+                            Timestamp time = getItem();
+                            return time.toString();
+                        }
+                    }, emptyProperty(), itemProperty()));
+
+                    if(item == null || b){
+                        setGraphic(null);
+                    }else{
+                        setGraphic(text);
+                    }
+                }
+            };
+            return cell;
+        });
+
+        clmGiaTaiThoiDiem.setCellValueFactory(new PropertyValueFactory<>("giacapnhat"));
+        clmGiaTaiThoiDiem.setReorderable(false);
+        clmGiaTaiThoiDiem.setCellFactory(t->{
+            TableCell<LichsuGiamon, BigDecimal> cell = new TableCell<>(){
+                Text text = new Text();
+                {
+                    text.setTextAlignment(TextAlignment.CENTER);
+                }
+
+                @Override
+                protected void updateItem(BigDecimal item, boolean b) {
+                    super.updateItem(item, b);
+                    setPrefHeight(Control.USE_COMPUTED_SIZE);
+                    setAlignment(Pos.CENTER);
+
+                    text.wrappingWidthProperty().bind(widthProperty());
+                    text.textProperty().bind(Bindings.createStringBinding(() ->{
+                        if (getItem() == null) {
+                            return null;
+                        } else {
+                            BigDecimal bd = getItem();
+                            return Globals.numberFormat.format(bd);
+                        }
+                    }, emptyProperty(), itemProperty()));
+
+                    if(item == null || b){
+                        setGraphic(null);
+                    }else{
+                        setGraphic(text);
+                    }
+                }
+            };
+            return cell;
+        });
+
+        clmSeeDetails.setReorderable(false);
+        clmSeeDetails.setCellFactory(t->{
             TableCell<Monmenu, Void> cell = new TableCell<>(){
-                Button selectButton = new Button("Chọn");
+                Button selectButton = new Button("Chi tiết");
                 {
                     selectButton.setOnAction(t->{
                         MonAns_Table.setDisable(true);
-                        selectedMonmenu = getTableView().getItems().get(getIndex());
-                        DeselectButton.setDisable(false);
-                        DetailsButton.setDisable(false);
                         SearchArea.setDisable(true);
-                        selectPromptLabel.setText(String.format("Bạn có muốn xem chi tiết món có thông tin \"Mã: %d - Tên: %s\"?", selectedMonmenu.getMamon(),selectedMonmenu.getTenmon()));
+                        selectedMonmenu = getTableView().getItems().get(getIndex());
+                        seeDetails_OfMonmenu(selectedMonmenu);
+                        DeselectButton.setDisable(false);
                     });
                 }
 
@@ -412,8 +489,10 @@ public class QuanLyMonAnController implements Initializable {
             ChiTietMonAn_Pane.setVisible(false);
             SelectionPrompt_Overlay.setVisible(true);
         }else{
+            LichSuGia_Table.getItems().clear();
             ChiTietMonAn_Pane.setVisible(true);
             SelectionPrompt_Overlay.setVisible(false);
+
             ChiTietMonAn_TenMon.setText(monmenu.getTenmon());
             ChiTietMonAn_GiaBan.setText(Globals.numberFormat.format(monmenu.getGiaban()));
             ChiTietMonAn_TrangThaiBan.setText(monmenu.getTrangthai() ? "Đang bán" : "Đã ngừng");
@@ -442,7 +521,35 @@ public class QuanLyMonAnController implements Initializable {
                 alert.setContentText("Đường dẫn đến hình ảnh có lỗi, không thể hiển thị ảnh.");
                 alert.show();
             }
-
+            toggleLoadingMode(true);
+            if(monmenu.getMamon() == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Không thể tìm thấy lịch sử với mã món");
+                alert.setContentText("Không thể tìm thấy lịch sử giá ứng với mã món.");
+                alert.show();
+                toggleLoadingMode(false);
+                return;
+            }
+            Task<List<LichsuGiamon>> getLSGia = new Task<List<LichsuGiamon>>() {
+                @Override
+                protected List<LichsuGiamon> call() throws Exception {
+                    return LichsuGiamonDAO.getInstance().getLS_FromMonmenuID(monmenu.getMamon());
+                }
+            };
+            getLSGia.setOnSucceeded(t->{
+                List<LichsuGiamon> temp = getLSGia.getValue();
+                if(temp == null || temp.size() == 0){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText("Không tìm thấy kết quả phù hợp");
+                    alert.setContentText("Không thể tìm thấy bất kì lịch sử giá nào của món");
+                    alert.show();
+                    toggleLoadingMode(false);
+                    return;
+                }
+                LichSuGia_Table.setItems(FXCollections.observableList(temp));
+                toggleLoadingMode(false);
+            });
+            ThreadPool.getInstance().submitTask(getLSGia);
         }
     }
 
@@ -478,30 +585,20 @@ public class QuanLyMonAnController implements Initializable {
     @FXML
     private void RefreshButton_Clicked(MouseEvent mouseEvent) {
         selectedMonmenu = null;
-        DetailsButton.setDisable(true);
-        seeDetails_OfMonmenu(null);
         DeselectButton.setDisable(true);
+        seeDetails_OfMonmenu(null);
         MonAns_Table.setDisable(false);
         SearchArea.setDisable(false);
-        selectPromptLabel.setText("Vui lòng chọn một món muốn xem chi tiết từ danh sách");
         RefreshData();
-    }
-
-    @FXML
-    private void DetailsButton_Clicked(MouseEvent mouseEvent) {
-        Monmenu m = selectedMonmenu;
-        seeDetails_OfMonmenu(m);
     }
 
     @FXML
     private void DeselectButton_Clicked(MouseEvent mouseEvent) {
         selectedMonmenu = null;
-        DetailsButton.setDisable(true);
-        seeDetails_OfMonmenu(null);
         DeselectButton.setDisable(true);
+        seeDetails_OfMonmenu(null);
         MonAns_Table.setDisable(false);
         SearchArea.setDisable(false);
-        selectPromptLabel.setText("Vui lòng chọn một món muốn xem chi tiết từ danh sách");
     }
 
     @FXML

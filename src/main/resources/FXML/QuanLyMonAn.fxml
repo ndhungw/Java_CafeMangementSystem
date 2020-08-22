@@ -77,7 +77,7 @@
                                     <columns>
                                         <TableColumn fx:id="clmMaMon" editable="false" prefWidth="75.0" resizable="false" text="Mã món" />
                                         <TableColumn fx:id="clmTenMon" editable="false" prefWidth="175.0" resizable="false" text="Tên món" />
-                                        <TableColumn fx:id="clmSelect" editable="false" prefWidth="100.0" resizable="false" text="Lựa chọn" />
+                                        <TableColumn fx:id="clmSeeDetails" editable="false" prefWidth="100.0" resizable="false" text="Xem chi tiết" />
                                         <TableColumn fx:id="clmGiaBan" editable="false" prefWidth="150.0" resizable="false" text="Giá món" />
                                         <TableColumn fx:id="clmTrangThaiBan" editable="false" prefWidth="150.0" resizable="false" text="Trạng thái bán" />
                                         <TableColumn fx:id="clmActions" editable="false" prefWidth="200.0" resizable="false" text="Hành động" />
@@ -110,34 +110,45 @@
                 <StackPane maxWidth="250.0" prefWidth="250.0">
                     <ScrollPane fx:id="ChiTietMonAn_Pane" fitToWidth="true" style="-fx-background-color:transparent;" visible="false" BorderPane.alignment="CENTER">
                        <content>
-                          <GridPane>
-                              <columnConstraints>
-                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="20" />
-                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="80" />
-                              </columnConstraints>
-                              <rowConstraints>
-                                  <RowConstraints maxHeight="Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                              </rowConstraints>
-                              <Label fx:id="ChiTietMonAn_TenMon" style="-fx-font-weight: bold;" text="Tên món" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
-                              <ImageView fx:id="ChiTietMonAn_ImageMon" fitHeight="200.0" fitWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
-                                  <image>
-                                      <Image url="@../Default_Images/fast-food.png" />
-                                  </image>
-                              </ImageView>
-                              <Label style="-fx-font-weight: bold;" text="Giá hiện tại" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                              <Label fx:id="ChiTietMonAn_GiaBan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label style="-fx-font-weight: bold;" text="Trạng thái bán" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                              <Label fx:id="ChiTietMonAn_TrangThaiBan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                          </GridPane>
+                           <VBox>
+                              <GridPane>
+                                  <columnConstraints>
+                                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="20" />
+                                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="80" />
+                                  </columnConstraints>
+                                  <rowConstraints>
+                                      <RowConstraints maxHeight="Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                      <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                      <RowConstraints maxHeight="Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                      <RowConstraints maxHeight="Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                  </rowConstraints>
+                                  <Label fx:id="ChiTietMonAn_TenMon" style="-fx-font-weight: bold;" text="Tên món" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+                                  <ImageView fx:id="ChiTietMonAn_ImageMon" fitHeight="200.0" fitWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                      <image>
+                                          <Image url="@../Default_Images/fast-food.png" />
+                                      </image>
+                                  </ImageView>
+                                  <Label style="-fx-font-weight: bold;" text="Giá hiện tại" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                  <Label fx:id="ChiTietMonAn_GiaBan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                  <Label style="-fx-font-weight: bold;" text="Trạng thái bán" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                  <Label fx:id="ChiTietMonAn_TrangThaiBan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              </GridPane>
+                               <AnchorPane id="AnchorPane" prefWidth="250.0">
+                                   <children>
+                                       <TableView fx:id="LichSuGia_Table" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                           <columns>
+                                               <TableColumn fx:id="clmThoiDiem" editable="false" prefWidth="125.0" resizable="false" text="Thời điểm" />
+                                               <TableColumn fx:id="clmGiaTaiThoiDiem" editable="false" prefWidth="125.0" resizable="false" text="Giá món" />
+                                           </columns>
+                                       </TableView>
+                                   </children>
+                               </AnchorPane>
+                           </VBox>
                        </content>
                     </ScrollPane>
                     <VBox fx:id="SelectionPrompt_Overlay" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                         <children>
-                            <Label fx:id="selectPromptLabel" style="-fx-font-weight: bold;" text="Vui lòng chọn một món muốn xem chi tiết từ danh sách" textAlignment="CENTER" wrapText="true" />
-                            <Button fx:id="DetailsButton" disable="true" mnemonicParsing="false" onMouseClicked="#DetailsButton_Clicked" text="Xem chi tiết" />
+                            <Label fx:id="selectPromptLabel" style="-fx-font-weight: bold;" text="Vui lòng chọn một món từ danh sách để xem chi tiết" textAlignment="CENTER" wrapText="true" />
                         </children>
                     </VBox>
                 </StackPane>

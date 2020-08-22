@@ -120,7 +120,7 @@ public class ThemChinhSuaMonAnController implements Initializable {
                 pageTitle.setText("Chỉnh sửa món ăn");
                 Add_Edit_MonAnButton.setText("Sửa thông tin món ăn này");
                 TenMonAn_Field.setText(temp.getTenmon());
-                GiaBan_Field.setText(temp.getGiaban().toPlainString());
+                GiaBan_Field.setText(temp.getGiaban().toString());
 
                 String linkString = temp.getHinhanh();
                 Image imgFromlinkString;
@@ -185,11 +185,11 @@ public class ThemChinhSuaMonAnController implements Initializable {
         Task<Void> insertOrUpdate = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                if(Monmenu_beingEditted == null)
-                    MonmenuDAO.getInstance().insert(m);
-                else
-                    MonmenuDAO.getInstance().update(m.getMamon(), m);
-                return null;
+            if(Monmenu_beingEditted == null)
+                MonmenuDAO.getInstance().insert(m);
+            else
+                MonmenuDAO.getInstance().update(m.getMamon(), m);
+            return null;
             }
         };
 

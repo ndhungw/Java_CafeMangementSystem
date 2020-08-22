@@ -20,6 +20,15 @@ public class BigDecimalTextFormatter extends TextFormatter<BigDecimal> {
             return null ;
         }
     };
+    private static Pattern defaultValidEditingState2 = Pattern.compile("(([1-9][0-9]{0,6})|0)?");
+    public static UnaryOperator<TextFormatter.Change> defaultFilter2 = c -> {
+        String text = c.getControlNewText();
+        if (defaultValidEditingState2.matcher(text).matches()) {
+            return c ;
+        } else {
+            return null ;
+        }
+    };
     public static StringConverter<BigDecimal> defaultConverter = new StringConverter<BigDecimal>() {
         @Override
         public BigDecimal fromString(String s) {

@@ -1,5 +1,6 @@
 package CafeMangementSystem.DAOs;
 
+import CafeMangementSystem.Entities.LichsuGiamon;
 import CafeMangementSystem.Entities.Monmenu;
 import CafeMangementSystem.Utils.HibernateUtils;
 import CafeMangementSystem.Utils.ThreadPool;
@@ -7,10 +8,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class MonmenuDAO implements DAO<Monmenu> {
-    private static MonmenuDAO instance;
     private MonmenuDAO() {
     }
     private static class InnerDAO{
@@ -59,11 +60,18 @@ public class MonmenuDAO implements DAO<Monmenu> {
 
     @Override
     public boolean insert(Monmenu obj) {
+        if(obj == null) return false;
         Session session = HibernateUtils.getSessionFactory().openSession();
         Transaction t = null;
         try{
             t = session.beginTransaction();
             session.save(obj);
+            session.flush(); // insert obj first, then add a lichsu
+            LichsuGiamon newOrUpdateOldlichsu = new LichsuGiamon();
+            newOrUpdateOldlichsu.setMamon(obj.getMamon());
+            newOrUpdateOldlichsu.setThoidiemcapnhat(new Timestamp(System.currentTimeMillis()));
+            newOrUpdateOldlichsu.setGiacapnhat(obj.getGiaban());
+            session.save(newOrUpdateOldlichsu);
             t.commit();
             session.close();
             return true;
@@ -96,10 +104,29 @@ public class MonmenuDAO implements DAO<Monmenu> {
 
     @Override
     public boolean update(int id, Monmenu newObj) {
+        if(id!=newObj.getMamon()) return false;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
             session.getTransaction().begin();
+            String sql = "Select m from Monmenu m where m.mamon = :id";
+            Query query = session.createQuery(sql);
+            query.setParameter("id", id);
+            Monmenu result = (Monmenu) query.uniqueResult();
+            if(result == null) throw new Exception("invalid id of Monmenu");
+            boolean addNewTT = false;
+            if(!result.getGiaban().equals(newObj.getGiaban())) {
+                addNewTT = true;
+            }
+            session.detach(result);
             session.update(newObj);
+            session.flush();
+            if(addNewTT){
+                LichsuGiamon newOrUpdateOldlichsu = new LichsuGiamon();
+                newOrUpdateOldlichsu.setMamon(newObj.getMamon());
+                newOrUpdateOldlichsu.setThoidiemcapnhat(new Timestamp(System.currentTimeMillis()));
+                newOrUpdateOldlichsu.setGiacapnhat(newObj.getGiaban());
+                session.save(newOrUpdateOldlichsu);
+            }
             session.getTransaction().commit();
             session.close();
             return true;
@@ -145,11 +172,8 @@ public class MonmenuDAO implements DAO<Monmenu> {
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
             session.getTransaction().begin();
-            System.out.println("cccccccccccccccccccccccccccccc");
             boolean currentTT = obj.TrangThaiBanProperty().get();
-            System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbb");
             session.refresh(obj);
-            System.out.println(currentTT);
             boolean ttnew = obj.getTrangthai();
             if(ttnew == !currentTT){
                 if(currentTT)

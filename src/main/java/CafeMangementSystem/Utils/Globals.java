@@ -7,7 +7,7 @@ public class Globals {
     public static NumberFormat numberFormat;
     static {
         numberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH);
-        numberFormat.setMaximumFractionDigits(3);
-        numberFormat.setMinimumFractionDigits(3);
+        numberFormat.setMaximumFractionDigits(0);
+        numberFormat.setMinimumFractionDigits(0);
     }
 }
