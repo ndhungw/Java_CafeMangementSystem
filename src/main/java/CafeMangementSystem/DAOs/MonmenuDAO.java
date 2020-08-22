@@ -46,7 +46,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
         List<Monmenu> result = null;
         try{
             session.getTransaction().begin();
-            String sql = "Select m from Monmenu m";
+            String sql = "Select m from Monmenu m order by m.trangthai desc";
             Query query = session.createQuery(sql);
             result = query.list();
             session.getTransaction().commit();
@@ -202,7 +202,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
             session.getTransaction().begin();
-            String hql = "select m from Monmenu m where m.mamon = :id";
+            String hql = "select m from Monmenu m where m.mamon = :id order by m.trangthai desc";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             result = query.list();
@@ -221,7 +221,7 @@ public class MonmenuDAO implements DAO<Monmenu> {
         try{
             session.getTransaction().begin();
             String pattern = "%" + name + "%";
-            String hql = "select m from Monmenu m where m.tenmon like :name";
+            String hql = "select m from Monmenu m where m.tenmon like :name order by m.trangthai desc";
             Query query = session.createQuery(hql);
             query.setParameter("name", pattern);
             result = query.list();

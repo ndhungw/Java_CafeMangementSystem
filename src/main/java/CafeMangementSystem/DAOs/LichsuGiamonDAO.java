@@ -24,7 +24,7 @@ public class LichsuGiamonDAO{
         List<LichsuGiamon> list = null;
         try{
             session.getTransaction().begin();
-            String hql = "select ls from LichsuGiamon ls where ls.mamon = :idMonmenu";
+            String hql = "select ls from LichsuGiamon ls where ls.mamon = :idMonmenu order by ls.thoidiemcapnhat desc";
             Query query = session.createQuery(hql);
             query.setParameter("idMonmenu", idMonmenu);
             list = query.list();
