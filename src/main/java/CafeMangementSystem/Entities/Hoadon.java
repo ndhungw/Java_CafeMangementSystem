@@ -136,4 +136,26 @@ public class Hoadon {
     public void setNhanvienByNvlaphoadon(Nhanvien nhanvienByNvlaphoadon) {
         this.nhanvienByNvlaphoadon = nhanvienByNvlaphoadon;
     }
+
+    public void setALlNewValue(Hoadon newObj) {
+        this.mahoadon = newObj.mahoadon;
+        this.mucgiamgia = newObj.mucgiamgia;
+        this.thanhtien = newObj.thanhtien;
+        this.tientra = newObj.tientra;
+        this.tienthoi = newObj.tienthoi;
+        this.ngaygiaodich = newObj.ngaygiaodich;
+        this.nvlaphoadon = newObj.nvlaphoadon;
+    }
+
+    @Override
+    public String toString() {
+        return "Mã hóa đơn: " + this.mahoadon +
+                " | Mức giảm giá: " + this.mucgiamgia +
+                " | Thành tiền: " + this.thanhtien +
+                " | Tiền trả: " + this.tientra +
+                " | Tiền thối: " + this.tienthoi +
+                " | Ngày giao dịch: " + this.ngaygiaodich +
+                " | Nhân viên lập (manv: "+ this.nvlaphoadon +
+                "): " + this.nhanvienByNvlaphoadon.getTennv();
+    }
 }
