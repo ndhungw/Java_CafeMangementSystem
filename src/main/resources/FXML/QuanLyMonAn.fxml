@@ -21,13 +21,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CafeMangementSystem.Controllers.QuanLyMonAnController">
+<StackPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CafeMangementSystem.Controllers.QuanLyMonAnController">
     <children>
-        <BorderPane fx:id="QuanLyMonAn_BorderPane" disable="true" maxHeight="550.0" maxWidth="750.0">
+        <BorderPane fx:id="QuanLyMonAn_BorderPane" disable="true" maxHeight="750.0" maxWidth="1150.0">
             <top>
-                <BorderPane prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                <BorderPane prefHeight="150.0" BorderPane.alignment="CENTER">
                     <center>
-                        <HBox fx:id="SearchArea" alignment="CENTER" prefHeight="100.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+                        <HBox fx:id="SearchArea" alignment="CENTER"  prefWidth="0.0" BorderPane.alignment="CENTER">
                             <BorderPane.margin>
                                 <Insets />
                             </BorderPane.margin>
@@ -50,7 +50,7 @@
                         </HBox>
                     </center>
                <top>
-                  <BorderPane maxHeight="70.0" prefHeight="70.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <BorderPane maxHeight="70.0" prefHeight="70.0" BorderPane.alignment="CENTER">
                      <left>
                         <Button mnemonicParsing="false" onMouseClicked="#ReturnButton_OnClick" text="Quay về trang chủ" BorderPane.alignment="CENTER" />
                      </left>
@@ -69,9 +69,9 @@
                 </BorderPane>
             </top>
             <center>
-                <ScrollPane style="-fx-background-color:transparent;">
+                <ScrollPane style="-fx-background-color:transparent;" vbarPolicy="ALWAYS">
                     <content>
-                        <AnchorPane id="AnchorPane" prefWidth="850.0">
+                        <AnchorPane id="AnchorPane" prefWidth="850.0" prefHeight="600.0">
                             <children>
                                 <TableView fx:id="MonAns_Table" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
@@ -107,8 +107,8 @@
                 </HBox>
             </bottom>
             <right>
-                <StackPane maxWidth="250.0" prefWidth="250.0">
-                    <ScrollPane fx:id="ChiTietMonAn_Pane" fitToWidth="true" style="-fx-background-color:transparent;" visible="false" BorderPane.alignment="CENTER">
+                <StackPane maxWidth="350.0" prefWidth="350.0">
+                    <ScrollPane fx:id="ChiTietMonAn_Pane" fitToWidth="true" style="-fx-background-color:transparent;" visible="false" BorderPane.alignment="CENTER" vbarPolicy="ALWAYS">
                        <content>
                            <VBox>
                               <GridPane>
@@ -133,12 +133,12 @@
                                   <Label style="-fx-font-weight: bold;" text="Trạng thái bán" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                                   <Label fx:id="ChiTietMonAn_TrangThaiBan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               </GridPane>
-                               <AnchorPane id="AnchorPane" prefWidth="250.0">
+                               <AnchorPane id="AnchorPane" prefWidth="350.0">
                                    <children>
                                        <TableView fx:id="LichSuGia_Table" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                            <columns>
-                                               <TableColumn fx:id="clmThoiDiem" editable="false" prefWidth="125.0" resizable="false" text="Thời điểm" />
-                                               <TableColumn fx:id="clmGiaTaiThoiDiem" editable="false" prefWidth="125.0" resizable="false" text="Giá món" />
+                                               <TableColumn fx:id="clmThoiDiem" editable="false" prefWidth="175.0" resizable="false" text="Thời điểm" />
+                                               <TableColumn fx:id="clmGiaTaiThoiDiem" editable="false" prefWidth="175.0" resizable="false" text="Giá món" />
                                            </columns>
                                        </TableView>
                                    </children>
