@@ -3,6 +3,7 @@ package CafeMangementSystem.Entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
@@ -12,10 +13,23 @@ public class Hoadon {
     private BigDecimal thanhtien;
     private BigDecimal tientra;
     private BigDecimal tienthoi;
-    private Timestamp ngaygiaodich;
+    private LocalDateTime ngaygiaodich;
     private Integer nvlaphoadon;
     private Collection<ChitietHoadon> chitietHoadonsByMahoadon;
     private Nhanvien nhanvienByNvlaphoadon;
+
+    public Hoadon() {
+    }
+
+    public Hoadon(Integer mahoadon, Integer mucgiamgia, BigDecimal thanhtien, BigDecimal tientra, BigDecimal tienthoi, LocalDateTime ngaygiaodich, Integer nvlaphoadon) {
+        this.mahoadon = mahoadon;
+        this.mucgiamgia = mucgiamgia;
+        this.thanhtien = thanhtien;
+        this.tientra = tientra;
+        this.tienthoi = tienthoi;
+        this.ngaygiaodich = ngaygiaodich;
+        this.nvlaphoadon = nvlaphoadon;
+    }
 
     @Id
     @Column(name = "mahoadon", nullable = false)
@@ -69,11 +83,11 @@ public class Hoadon {
 
     @Basic
     @Column(name = "ngaygiaodich", nullable = false)
-    public Timestamp getNgaygiaodich() {
+    public LocalDateTime getNgaygiaodich() {
         return ngaygiaodich;
     }
 
-    public void setNgaygiaodich(Timestamp ngaygiaodich) {
+    public void setNgaygiaodich(LocalDateTime ngaygiaodich) {
         this.ngaygiaodich = ngaygiaodich;
     }
 

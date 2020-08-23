@@ -14,6 +14,26 @@ import java.util.List;
 public class MonmenuDAO implements DAO<Monmenu> {
     private MonmenuDAO() {
     }
+
+    public List<Monmenu> getAll(String searchText) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        List<Monmenu> result = null;
+        try{
+            session.getTransaction().begin();
+            String sql = "Select m from Monmenu m where tenmon like :pattern order by m.trangthai desc";
+            String pattern = "%" + searchText + "%";
+            Query query = session.createQuery(sql);
+            query.setParameter("pattern",pattern);
+            result = query.list();
+            session.getTransaction().commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            session.getTransaction().rollback();
+        }
+        session.close();
+        return result;
+    }
+
     private static class InnerDAO{
         private static MonmenuDAO DAO = new MonmenuDAO();
     }

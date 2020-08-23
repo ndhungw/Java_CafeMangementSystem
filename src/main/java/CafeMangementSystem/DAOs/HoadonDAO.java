@@ -73,8 +73,12 @@ public class HoadonDAO implements DAO<Hoadon> {
 
         try {
             session.getTransaction().begin();
+
             session.save(obj);
+
             session.flush();
+            System.out.println("Hóa đơn mới dược thêm vào DB:" + obj);
+
             session.getTransaction().commit();
 
             return true;
