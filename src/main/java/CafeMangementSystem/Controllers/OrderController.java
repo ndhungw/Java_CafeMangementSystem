@@ -13,15 +13,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
@@ -344,5 +349,23 @@ public class OrderController implements Initializable {
                 ChitietHoadonDAO.getInstance().insert(chitietHoadon);
             }
         }
+    }
+
+    public void logout(ActionEvent actionEvent) {
+        // clean sessionUser here
+        // ...
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Login.fxml"));
+        Parent loginFormParent = null;
+
+        try {
+            loginFormParent = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage loginStage = (Stage) orderRoot.getScene().getWindow();
+        Scene loginScene = new Scene(loginFormParent);
+        loginStage.setScene(loginScene);
+        loginStage.show();
     }
 }
