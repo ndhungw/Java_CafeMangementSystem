@@ -93,7 +93,7 @@ public class ThongKeControllers implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tenChuQuanLabel.setText(SessionUser.getInstance().getNhanvien().getTennv());
+//        tenChuQuanLabel.setText(SessionUser.getInstance().getNhanvien().getTennv());
         initTable();
     }
 

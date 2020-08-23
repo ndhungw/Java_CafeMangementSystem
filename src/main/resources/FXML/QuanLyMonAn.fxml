@@ -67,25 +67,28 @@
             </top>
             <center>
                 <ScrollPane style="-fx-background-color:transparent;" vbarPolicy="ALWAYS">
-                    <content>
+               <BorderPane.margin>
+                  <Insets right="10.0" />
+               </BorderPane.margin>
+               <content>
                         <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="850.0">
                             <children>
                                 <TableView fx:id="MonAns_Table" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn fx:id="clmMaMon" editable="false" prefWidth="75.0" resizable="false" text="Mã món" />
-                                        <TableColumn fx:id="clmTenMon" editable="false" prefWidth="175.0" resizable="false" text="Tên món" />
-                                        <TableColumn fx:id="clmSeeDetails" editable="false" prefWidth="100.0" resizable="false" text="Xem chi tiết" />
-                                        <TableColumn fx:id="clmGiaBan" editable="false" prefWidth="150.0" resizable="false" text="Giá món" />
-                                        <TableColumn fx:id="clmTrangThaiBan" editable="false" prefWidth="150.0" resizable="false" text="Trạng thái bán" />
-                                        <TableColumn fx:id="clmActions" editable="false" prefWidth="200.0" resizable="false" text="Hành động" />
+                                        <TableColumn fx:id="clmMaMon" editable="false" prefWidth="54.0" resizable="false" text="Mã món" />
+                                        <TableColumn fx:id="clmTenMon" editable="false" prefWidth="186.0" resizable="false" text="Tên món" />
+                                        <TableColumn fx:id="clmSeeDetails" editable="false" prefWidth="74.0" resizable="false" text="Xem chi tiết" />
+                                        <TableColumn fx:id="clmGiaBan" editable="false" prefWidth="110.0" resizable="false" text="Giá món" />
+                                        <TableColumn fx:id="clmTrangThaiBan" editable="false" prefWidth="117.0" resizable="false" text="Trạng thái bán" />
+                                        <TableColumn fx:id="clmActions" editable="false" prefWidth="229.0" resizable="false" text="Hành động" />
                                     </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                                 </TableView>
                             </children>
                         </AnchorPane>
-                    </content>
-               <BorderPane.margin>
-                  <Insets right="10.0" />
-               </BorderPane.margin>
+               </content>
                 </ScrollPane>
             </center>
             <bottom>
@@ -151,10 +154,10 @@
                 </StackPane>
             </right>
         </BorderPane>
-        <VBox fx:id="loadingOverlay" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-            <children>
-                <ProgressIndicator />
-            </children>
-        </VBox>
+      <VBox fx:id="loadingOverlay" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <ProgressIndicator />
+         </children>
+      </VBox>
     </children>
 </StackPane>

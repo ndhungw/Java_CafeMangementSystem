@@ -70,7 +70,7 @@ public class ThemChinhSuaMonAnController implements Initializable {
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
 
-        BigDecimalTextFormatter textFormatter = new BigDecimalTextFormatter(BigDecimalTextFormatter.defaultConverter, new BigDecimal(0.0), BigDecimalTextFormatter.defaultFilter1);
+        BigDecimalTextFormatter textFormatter = new BigDecimalTextFormatter(BigDecimalTextFormatter.defaultConverter, new BigDecimal("0.0"), BigDecimalTextFormatter.defaultFilter1);
         GiaBan_Field.setTextFormatter(textFormatter);
         TenMonAn_Field.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             TenMonAn_Field.setText(newValue.substring(0, Math.min(newValue.length(), 30)));
@@ -197,12 +197,18 @@ public class ThemChinhSuaMonAnController implements Initializable {
             Stage s = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
             Scene scene;
             try{
-                loader.setLocation(getClass().getClassLoader().getResource("FXML\\QuanLyMonAn.fxml"));
-                loader.setRoot(null);
-                loader.setController(null);
-                Parent temp = loader.load();
-                scene = new Scene(temp, 800, 600);
-                scene.getStylesheets().add("global.css");
+//                loader.setLocation(getClass().getClassLoader().getResource("FXML\\QuanLyMonAn.fxml"));
+//                loader.setRoot(null);
+//                loader.setController(null);
+//                Parent temp = loader.load();
+//                scene = new Scene(temp, 800, 600);
+//                scene.getStylesheets().add("global.css");
+//                s.setResizable(false);
+                loader.setLocation(getClass().getClassLoader().getResource("FXML\\AdminScene.fxml"));
+                loader.setController(new AdminSceneController());
+                Parent parent = loader.load();
+                scene = new Scene(parent);
+//                scene.getStylesheets().add("global.css");
                 s.setResizable(false);
             }catch(IOException e){
                 e.printStackTrace(System.err);
@@ -223,13 +229,17 @@ public class ThemChinhSuaMonAnController implements Initializable {
         Stage s = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
         Scene scene;
         try{
-            loader.setLocation(getClass().getClassLoader().getResource("FXML\\QuanLyMonAn.fxml"));
-            loader.setRoot(null);
-            loader.setController(null);
-            Parent temp = loader.load();
-            scene = new Scene(temp, 800, 600);
-            scene.getStylesheets().add("global.css");
-            s.setResizable(false);
+//            loader.setLocation(getClass().getClassLoader().getResource("FXML\\QuanLyMonAn.fxml"));
+//            loader.setRoot(null);
+//            loader.setController(null);
+//            Parent temp = loader.load();
+//            scene = new Scene(temp, 800, 600);
+//            scene.getStylesheets().add("global.css");
+//            s.setResizable(false);
+            loader.setLocation(getClass().getClassLoader().getResource("FXML\\AdminScene.fxml"));
+            loader.setController(new AdminSceneController());
+            Parent parent = loader.load();
+            scene = new Scene(parent);
         }catch(IOException e){
             e.printStackTrace(System.err);
             toggleLoadingMode(false);

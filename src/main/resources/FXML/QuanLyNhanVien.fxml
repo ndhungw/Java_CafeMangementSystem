@@ -25,13 +25,12 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="380.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="380.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="702.0" minHeight="10.0" prefHeight="691.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="380.0" minHeight="10.0" prefHeight="77.60000915527344" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="739.0" minHeight="10.0" prefHeight="692.7999908447266" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TabPane tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <TabPane tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="2" GridPane.rowIndex="2">
         <tabs>
           <Tab text="Đổi mật khẩu">
                <content>
@@ -118,7 +117,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <TableView fx:id="nhanvienTableView" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <TableView fx:id="nhanvienTableView" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <columns>
           <TableColumn fx:id="maNvCol" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="Mã NV" />
           <TableColumn fx:id="tenNvCol" maxWidth="-1.0" minWidth="140.0" prefWidth="-1.0" text="Tên NV" />
@@ -129,15 +128,13 @@
             <TableColumn fx:id="trangThaiCol" maxWidth="-1.0" minWidth="65.0" prefWidth="65.0" text="Khả dụng" />
         </columns>
       </TableView>
-      <ToolBar maxWidth="350.0" prefHeight="35.0" prefWidth="558.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <ToolBar maxWidth="350.0" prefHeight="35.0" prefWidth="558.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <items>
             <TextField fx:id="searchEmpTextField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="281.0" promptText="Tìm kiếm theo tên/số điện thoại/địa chỉ" />
             <Button fx:id="searchEmpButton" mnemonicParsing="false" onAction="#searchEmp" text="Tìm" />
          </items>
       </ToolBar>
-      <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refresh" text="Làm mới màn hình &amp; xóa bỏ các tùy chọn" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <Button fx:id="deleteEmpButton" mnemonicParsing="false" onAction="#deleteEmp" text="Xóa nhân viên" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Đăng xuất" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-      <Label fx:id="tenChuQuanLabel" text="Tên chủ quán" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refresh" text="Làm mới màn hình &amp; xóa bỏ các tùy chọn" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+      <Button fx:id="deleteEmpButton" mnemonicParsing="false" onAction="#deleteEmp" text="Xóa nhân viên" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
    </children>
 </GridPane>
