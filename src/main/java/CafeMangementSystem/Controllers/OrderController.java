@@ -3,20 +3,30 @@ package CafeMangementSystem.Controllers;
 import CafeMangementSystem.DAOs.MonmenuDAO;
 import CafeMangementSystem.Entities.Monmenu;
 import CafeMangementSystem.Entities.Nhanvien;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class OrderController implements Initializable {
@@ -62,9 +72,12 @@ public class OrderController implements Initializable {
     @FXML
     private TableColumn<Monmenu, BigDecimal> giabanCol;
 
+    private ObservableList<Monmenu> selectedMon;
+
     // end main components
 
     public OrderController() {
+        selectedMon = FXCollections.observableList(new ArrayList<>());
     }
 
     @Override
@@ -77,28 +90,20 @@ public class OrderController implements Initializable {
         monmenuObservableList = FXCollections.observableList(MonmenuDAO.getInstance().getAll());
         System.out.println("Danh sách tất cả các món hiện tại có:\n");
 
-        for (Monmenu monmenu : monmenuObservableList) {
+        for (int i = 0; i < monmenuObservableList.size(); i++) {
+            Monmenu monmenu = monmenuObservableList.get(i);
             System.out.println(monmenu);
 
             MonTileController monTileController = new MonTileController(monmenu);
-//            String url = monmenu.getHinhanh();
-//            if ( url.isEmpty()) {
-//                monTileController.getHinhanhImageView().setImage(new Image ("food-images\\no-image-food.jpg"));
-//            } else {
-//                monTileController.getHinhanhImageView().setImage(new Image(monmenu.getHinhanh()));
-//            }
-//            monTileController.getTenmonLabel().setText(monmenu.getTenmon());
-//
-//            // Món hiện đang ngừng bán
-//            if (monmenu.getTrangthai()==false) {
-//                monTileController.getMonTileGridPane().setDisable(true);
-//                monTileController.getNgungBanLabel().setVisible(true); // show thẻ ngừng bán
-//                monTileController.getHinhanhImageView().setOpacity(0.3);
-//            } else {
-//                monTileController.getNgungBanLabel().setVisible(false); // ẩn thẻ ngừng bán
-//            }
 
-            menuTilePane.getChildren().add(monTileController.getMonTileGridPane());
+            menuTilePane.getChildren().add(monTileController.getMonTileGridPane()); // thêm món vào tile pane
+            ((GridPane)menuTilePane.getChildren().get(i)).setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    selectedMon.add(monmenu);
+                    monmenuTableView.setItems(selectedMon);
+                }
+            });
         }
     }
 
@@ -106,7 +111,13 @@ public class OrderController implements Initializable {
         mamonCol.setCellValueFactory(new PropertyValueFactory<>("mamon"));
         tenmonCol.setCellValueFactory(new PropertyValueFactory<>("tenmon"));
         giabanCol.setCellValueFactory(new PropertyValueFactory<>("giaban"));
-        // custom
-//        soluongCol.setCellValueFactory(new PropertyValueFactory<>(""));
+//        soluongCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Monmenu, Integer>, ObservableValue<Integer>>() {
+//            @Override
+//            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Monmenu, Integer> monmenuIntegerCellDataFeatures) {
+//                IntegerProperty integerProperty = new SimpleIntegerProperty();
+//                integerProperty.setValue(1);
+//                return integerProperty;
+//            }
+//        });
     }
 }
