@@ -110,4 +110,15 @@ public class ChitietHoadon {
     public void setMonmenuByMamon(Monmenu monmenuByMamon) {
         this.monmenuByMamon = monmenuByMamon;
     }
+
+    @Override
+    public String toString() {
+        return "ChitietHoadon{" +
+                " | Mã HĐ: " + mahoadon +
+                " | Mã món: " + mamon +
+                " | SL: " + soluong +
+                " | Giá bán: " + giaban +
+                " | Tổng tiền: " + tongtien +
+                "}";
+    }
 }
