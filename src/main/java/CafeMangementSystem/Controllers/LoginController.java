@@ -81,7 +81,7 @@ public class LoginController implements Initializable {
 
                 if (nhanvien.getChucvu().equals(ChucVu.ChuQuan.getName())) {
                     // load UI for Chủ quán
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/QuanLyNhanVien.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/AdminScene.fxml"));
                     Parent parent = null;
                     try {
                         parent = loader.load();

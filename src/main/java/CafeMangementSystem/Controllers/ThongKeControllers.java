@@ -3,16 +3,23 @@ package CafeMangementSystem.Controllers;
 import CafeMangementSystem.DAOs.HoadonDAO;
 import CafeMangementSystem.DAOs.NhanvienDAO;
 import CafeMangementSystem.Entities.Hoadon;
+import CafeMangementSystem.Utils.SessionUser;
+import CafeMangementSystem.Utils.Utilities;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Date;
@@ -20,6 +27,9 @@ import java.util.ResourceBundle;
 
 
 public class ThongKeControllers implements Initializable {
+    @FXML
+    private GridPane root;
+
     @FXML
     private DatePicker fromDayDatePicker;
 
@@ -58,8 +68,32 @@ public class ThongKeControllers implements Initializable {
     @FXML
     private TextField totalRevenueTextField;
 
+    @FXML
+    private Label tenChuQuanLabel;
+
+    public ThongKeControllers() {
+        this.load();
+    }
+
+    private void load() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ThongKe.fxml"));
+        try {
+            if (loader.getController() == null) {
+                loader.setController(this);
+            }
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Node getRoot() {
+        return this.root;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        tenChuQuanLabel.setText(SessionUser.getInstance().getNhanvien().getTennv());
         initTable();
     }
 
@@ -107,5 +141,10 @@ public class ThongKeControllers implements Initializable {
                 hoadonTableView.setItems(contextHoaDonList);
             }
         }
+    }
+
+    @FXML
+    private void logout(ActionEvent actionEvent) {
+        Utilities.getInstance().logout(actionEvent);
     }
 }

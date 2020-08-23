@@ -85,7 +85,7 @@ public class OrderController implements Initializable {
     @FXML
     private TableColumn<MonOnBill, Void> removeButtonCol;
 
-    private ObservableList<MonOnBill> selectedMon;
+    private final ObservableList<MonOnBill> selectedMon;
 
     // end main components
 
@@ -123,6 +123,8 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todayLabel.setText(LocalDate.now(ZoneId.systemDefault()).toString());
+
+        maHoadonLabel.setText("Mã hóa đơn: " + (HoadonDAO.getInstance().getMaxId() + 1));
 
         Nhanvien nhanvien = SessionUser.getInstance().getNhanvien(); // get session user
         tenNhanvienLabel.setText("Mã " + nhanvien.getManv() + " - " + nhanvien.getTennv());
@@ -163,7 +165,7 @@ public class OrderController implements Initializable {
             MonTileController monTileController = new MonTileController(monmenu);
 
             menuTilePane.getChildren().add(monTileController.getMonTileGridPane()); // thêm món vào tile pane
-            ((GridPane)menuTilePane.getChildren().get(i)).setOnMouseClicked((EventHandler<MouseEvent>) mouseEvent -> {
+            menuTilePane.getChildren().get(i).setOnMouseClicked(mouseEvent -> {
                 // Cập nhật các món đã chọn lên bill table
                 if (!checkIfContains(selectedMon, monOnBill.getMamon())) {
                     // Nếu chưa nằm trong danh sách chọn thì đưa thẳng lên (SL: 1)
@@ -213,7 +215,7 @@ public class OrderController implements Initializable {
         removeButtonCol.setReorderable(false);
         removeButtonCol.setCellFactory(t->{
             TableCell<MonOnBill, Void> cell = new TableCell<>(){
-                Button removeMonButton = new Button("Xóa");
+                final Button removeMonButton = new Button("Xóa");
                 {
                     removeMonButton.setOnAction(t->{
                         MonOnBill monToRemove = billTableView.getItems().get(getIndex());
@@ -315,6 +317,12 @@ public class OrderController implements Initializable {
 
         monmenuObservableList = FXCollections.observableList(MonmenuDAO.getInstance().getAll());
         initMenu(monmenuObservableList);
+
+        // cập nhật label hiện mã hóa đơn
+        maHoadonLabel.setText("Mã hóa đơn: " + (HoadonDAO.getInstance().getMaxId() + 1));
+
+        billTableView.setDisable(false);
+        menuTilePane.setDisable(false);
     }
 
     public void search(ActionEvent actionEvent) {
@@ -334,7 +342,7 @@ public class OrderController implements Initializable {
                 BigDecimal.valueOf(Float.parseFloat(receivedAmountTextField.getText().trim())),
                 BigDecimal.valueOf(Float.parseFloat(changeAmountTextField.getText().trim())),
                 LocalDateTime.now(ZoneId.systemDefault()),
-                1
+                SessionUser.getInstance().getNhanvien().getManv()
         );
 
         boolean inserted = HoadonDAO.getInstance().insert(newHoadon);
@@ -354,26 +362,15 @@ public class OrderController implements Initializable {
 
                 ChitietHoadonDAO.getInstance().insert(chitietHoadon);
             }
+
+            createBillButton.setDisable(true);
+            billTableView.setDisable(true);
+            menuTilePane.setDisable(true);
         }
     }
 
     @FXML
     private void logout(ActionEvent actionEvent) {
         Utilities.getInstance().logout(actionEvent);
-//        // clean sessionUser
-//        SessionUser.getInstance().cleanSession();
-//
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Login.fxml"));
-//        Parent loginFormParent = null;
-//
-//        try {
-//            loginFormParent = loader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Stage loginStage = (Stage) orderRoot.getScene().getWindow();
-//        Scene loginScene = new Scene(loginFormParent);
-//        loginStage.setScene(loginScene);
-//        loginStage.show();
     }
 }

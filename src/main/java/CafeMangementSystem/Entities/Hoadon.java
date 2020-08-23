@@ -170,6 +170,6 @@ public class Hoadon {
                 " | Tiền thối: " + this.tienthoi +
                 " | Ngày giao dịch: " + this.ngaygiaodich +
                 " | Nhân viên lập (manv: "+ this.nvlaphoadon +
-                "): " + this.nhanvienByNvlaphoadon.getTennv();
+                ")";
     }
 }

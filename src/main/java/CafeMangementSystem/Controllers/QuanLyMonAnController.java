@@ -34,9 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -50,13 +48,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class QuanLyMonAnController implements Initializable {
-
     ObservableList<String> SearchCriteriasList;
     ObservableList<Monmenu> usableMonAn;
     Image defaultImage;
     FXMLLoader loader;
     Monmenu selectedMonmenu;
 
+    @FXML
+    private StackPane root;
     @FXML
     private BorderPane QuanLyMonAn_BorderPane;
     @FXML
@@ -105,6 +104,26 @@ public class QuanLyMonAnController implements Initializable {
     private TableColumn<LichsuGiamon, BigDecimal> clmGiaTaiThoiDiem;
     @FXML
     private TableColumn<Monmenu, Void> clmSeeDetails;
+
+    public QuanLyMonAnController() {
+        this.load();
+    }
+
+    private void load() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/QuanLyMonAn.fxml"));
+        try {
+            if (loader.getController() == null) {
+                loader.setController(this);
+            }
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Node getRoot() {
+        return this.root;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

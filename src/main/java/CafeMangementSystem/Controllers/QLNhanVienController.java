@@ -14,8 +14,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -26,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -129,6 +132,26 @@ public class QLNhanVienController implements Initializable {
 
     @FXML
     private Button logoutButton;
+
+    public Node getRoot() {
+        return this.quanLyNhanVienGridPane;
+    }
+
+    public QLNhanVienController() {
+        this.load();
+    }
+
+    private void load() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/QuanLyNhanVien.fxml"));
+        try {
+            if (loader.getController() == null) {
+                loader.setController(this);
+            }
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
