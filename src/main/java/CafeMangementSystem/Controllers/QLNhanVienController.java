@@ -503,6 +503,13 @@ public class QLNhanVienController implements Initializable {
 
         if (!confirm) { return; }
 
+        if (NhanvienDAO.getInstance().get(newNhanvien.getTendangnhap()) != null) {
+            System.out.println("Tên đăng nhập đã tồn tại");
+            Utilities.getInstance().showAlert(Alert.AlertType.ERROR,quanLyNhanVienGridPane.getScene().getWindow(),
+                    "Không thành công", "Tên đăng nhập đã tồn tại");
+            return;
+        }
+
         boolean inserted = NhanvienDAO.getInstance().insert(newNhanvien);
 
         if (inserted) {
@@ -530,7 +537,7 @@ public class QLNhanVienController implements Initializable {
         }
         // Xác nhận lại mật khẩu phải trùng
         if (!newPw.equals(confirmNewPw)) {
-            changePwMsgLabel.setText("Mật khẩu xác nhận phải giống với mật khẩu mới");
+            changePwMsgLabel.setText("Mật khẩu xác nhận không giống");
             return false;
         }
         return true;

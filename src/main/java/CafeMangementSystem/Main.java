@@ -23,9 +23,8 @@ public class Main extends Application {
 
         HibernateUtils.getSessionFactory();
         FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(getClass().getResource("/FXML/Order.fxml"));
+        Parent root = loader.load(getClass().getResource("/FXML/QuanLyNhanVien.fxml"));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("global.css");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
