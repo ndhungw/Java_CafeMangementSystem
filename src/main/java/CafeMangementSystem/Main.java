@@ -23,7 +23,7 @@ public class Main extends Application {
 
         HibernateUtils.getSessionFactory();
         FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(getClass().getResource("/FXML/QuanLyNhanVien.fxml"));
+        Parent root = loader.load(getClass().getResource("/FXML/Login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);

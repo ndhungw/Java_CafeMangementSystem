@@ -6,7 +6,10 @@ import CafeMangementSystem.DAOs.MonmenuDAO;
 import CafeMangementSystem.Entities.ChitietHoadon;
 import CafeMangementSystem.Entities.Hoadon;
 import CafeMangementSystem.Entities.Monmenu;
+import CafeMangementSystem.Entities.Nhanvien;
 import CafeMangementSystem.Utils.MonOnBill;
+import CafeMangementSystem.Utils.SessionUser;
+import CafeMangementSystem.Utils.Utilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -120,6 +123,9 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todayLabel.setText(LocalDate.now(ZoneId.systemDefault()).toString());
+
+        Nhanvien nhanvien = SessionUser.getInstance().getNhanvien(); // get session user
+        tenNhanvienLabel.setText("Mã " + nhanvien.getManv() + " - " + nhanvien.getTennv());
 
         monmenuObservableList = FXCollections.observableList(MonmenuDAO.getInstance().getAll());
 
@@ -351,21 +357,23 @@ public class OrderController implements Initializable {
         }
     }
 
-    public void logout(ActionEvent actionEvent) {
-        // clean sessionUser here
-        // ...
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Login.fxml"));
-        Parent loginFormParent = null;
-
-        try {
-            loginFormParent = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage loginStage = (Stage) orderRoot.getScene().getWindow();
-        Scene loginScene = new Scene(loginFormParent);
-        loginStage.setScene(loginScene);
-        loginStage.show();
+    @FXML
+    private void logout(ActionEvent actionEvent) {
+        Utilities.getInstance().logout(actionEvent);
+//        // clean sessionUser
+//        SessionUser.getInstance().cleanSession();
+//
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Login.fxml"));
+//        Parent loginFormParent = null;
+//
+//        try {
+//            loginFormParent = loader.load();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Stage loginStage = (Stage) orderRoot.getScene().getWindow();
+//        Scene loginScene = new Scene(loginFormParent);
+//        loginStage.setScene(loginScene);
+//        loginStage.show();
     }
 }

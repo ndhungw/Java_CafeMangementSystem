@@ -72,14 +72,14 @@ public class LoginController implements Initializable {
                 Utilities.getInstance().showAlert(Alert.AlertType.WARNING, owner, "Đăng nhập thất bại", "Tài khoản hiện đang bị khóa!" +
                         "\nConnect to admin for more information!");
             } else {
-                SessionUser.getInstance().setNhanvien(nhanvien);
+                SessionUser.getInstance().setNhanvien(nhanvien); // set user's session
 
                 Utilities.getInstance().showAlert(Alert.AlertType.INFORMATION, owner, "Đăng nhập thành công", "Chào mừng bạn!");
 
                 // load home screen
                 Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
 
-                if (nhanvien.getChucvu().equals(ChucVu.ChuQuan)) {
+                if (nhanvien.getChucvu().equals(ChucVu.ChuQuan.getName())) {
                     // load UI for Chủ quán
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/QuanLyNhanVien.fxml"));
                     Parent parent = null;
@@ -90,9 +90,19 @@ public class LoginController implements Initializable {
                     }
                     Scene scene = new Scene(parent);
                     stage.setScene(scene);
-                } else if (nhanvien.getChucvu().equals(ChucVu.NVBanHang)) {
+                } else if (nhanvien.getChucvu().equals(ChucVu.NVBanHang.getName())) {
                     // load UI for Nhân viên bán hàng
                     System.out.println("ĐĂNG NHẬP THÀNH CÔNG - LOAD MÀN HÌNH NHÂN VIÊN BÁN HÀNG");
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Order.fxml"));
+                    Parent parent = null;
+                    try {
+                        parent = loader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Scene scene = new Scene(parent);
+                    stage.setScene(scene);
                 }
 
                 stage.show();

@@ -3,6 +3,7 @@ package CafeMangementSystem.Controllers;
 import CafeMangementSystem.DAOs.NhanvienDAO;
 import CafeMangementSystem.Entities.ChucVu;
 import CafeMangementSystem.Entities.Nhanvien;
+import CafeMangementSystem.Utils.SessionUser;
 import CafeMangementSystem.Utils.Utilities;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -123,9 +124,15 @@ public class QLNhanVienController implements Initializable {
     @FXML
     private Label newAccountInfoStatusLabel;
 
+    @FXML
+    private Label tenChuQuanLabel;
+
+    @FXML
+    private Button logoutButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        tenChuQuanLabel.setText(SessionUser.getInstance().getNhanvien().getTennv());
         initEmpTable();
     }
 
@@ -615,5 +622,10 @@ public class QLNhanVienController implements Initializable {
         newTenDangNhapTextField.clear();
         newMatKhauPwField.clear();
         newMatKhau2PwField.clear();
+    }
+
+    @FXML
+    private void logout(ActionEvent actionEvent) {
+        Utilities.getInstance().logout(actionEvent);
     }
 }
