@@ -533,12 +533,12 @@ public class QLNhanVienController implements Initializable {
 
         if (!confirm) { return; }
 
-        if (NhanvienDAO.getInstance().get(newNhanvien.getTendangnhap()) != null) {
-            System.out.println("Tên đăng nhập đã tồn tại");
-            Utilities.getInstance().showAlert(Alert.AlertType.ERROR,quanLyNhanVienGridPane.getScene().getWindow(),
-                    "Không thành công", "Tên đăng nhập đã tồn tại");
-            return;
-        }
+//        if (NhanvienDAO.getInstance().get(newNhanvien.getTendangnhap()) != null) {
+//            System.out.println("Tên đăng nhập đã tồn tại");
+//            Utilities.getInstance().showAlert(Alert.AlertType.ERROR,quanLyNhanVienGridPane.getScene().getWindow(),
+//                    "Không thành công", "Tên đăng nhập đã tồn tại");
+//            return;
+//        }
 
         boolean inserted = NhanvienDAO.getInstance().insert(newNhanvien);
 

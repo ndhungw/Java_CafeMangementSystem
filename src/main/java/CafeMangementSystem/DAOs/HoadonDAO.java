@@ -142,7 +142,7 @@ public class HoadonDAO implements DAO<Hoadon> {
         return false;
     }
 
-    public List<Hoadon> getAll(Date fromDay, Date toDay) {
+    public List<Hoadon> getAll(LocalDateTime fromDay, LocalDateTime toDay) {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();
         List<Hoadon> hoadonList = null;
 
