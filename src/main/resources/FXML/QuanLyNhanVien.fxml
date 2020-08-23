@@ -25,8 +25,8 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="380.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="739.0" minHeight="10.0" prefHeight="739.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="380.0" minHeight="10.0" prefHeight="77.60000915527344" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="739.0" minHeight="10.0" prefHeight="692.7999908447266" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
@@ -123,9 +123,9 @@
           <TableColumn fx:id="tenNvCol" maxWidth="-1.0" minWidth="140.0" prefWidth="-1.0" text="Tên NV" />
             <TableColumn fx:id="dienThoaiCol" maxWidth="-1.0" minWidth="80.0" text="SĐT" />
             <TableColumn fx:id="diaChiCol" maxWidth="-1.0" minWidth="300.0" prefWidth="300.0" text="Địa chỉ" />
-            <TableColumn fx:id="ngaySinhCol" maxWidth="-1.0" minWidth="90.0" prefWidth="90.0" text="Ngày sinh" />
+            <TableColumn fx:id="ngaySinhCol" maxWidth="-1.0" minWidth="105.0" prefWidth="105.0" text="Ngày sinh" />
             <TableColumn fx:id="chucVuCol" maxWidth="-1.0" minWidth="80.0" text="Chức vụ" />
-            <TableColumn fx:id="trangThaiCol" maxWidth="-1.0" minWidth="65.0" prefWidth="65.0" text="Khả dụng" />
+            <TableColumn fx:id="trangThaiCol" maxWidth="-1.0" minWidth="80.0" prefWidth="-1" text="Khả dụng" />
         </columns>
       </TableView>
       <ToolBar maxWidth="350.0" prefHeight="35.0" prefWidth="558.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
