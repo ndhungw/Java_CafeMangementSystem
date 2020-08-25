@@ -247,29 +247,29 @@ public class NhanvienDAO implements DAO<Nhanvien> {
         return nhanvien;
     }
 
-    public Nhanvien get(String tendangnhap) {
-        SessionFactory factory = HibernateUtils.getSessionFactory();
-        Session session = factory.getCurrentSession();
-
-        Nhanvien nhanvien = null;
-
-        try {
-            session.getTransaction().begin();
-
-            String sql = "SELECT nv " +
-                    "FROM " + Nhanvien.class.getName() + " nv  " +
-                    "WHERE nv.tendangnhap = :usernameToCheck";
-
-            Query<Nhanvien> query = session.createQuery(sql);
-            query.setParameter("usernameToCheck", tendangnhap);
-            nhanvien = query.getSingleResult();
-
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.getTransaction().rollback();
-        }
-
-        return nhanvien;
-    }
+//    public Nhanvien get(String tendangnhap) {
+//        SessionFactory factory = HibernateUtils.getSessionFactory();
+//        Session session = factory.getCurrentSession();
+//
+//        Nhanvien nhanvien = null;
+//
+//        try {
+//            session.getTransaction().begin();
+//
+//            String sql = "SELECT nv " +
+//                    "FROM " + Nhanvien.class.getName() + " nv  " +
+//                    "WHERE nv.tendangnhap = :usernameToCheck";
+//
+//            Query<Nhanvien> query = session.createQuery(sql);
+//            query.setParameter("usernameToCheck", tendangnhap);
+//            nhanvien = query.getSingleResult();
+//
+//            session.getTransaction().commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            session.getTransaction().rollback();
+//        }
+//
+//        return nhanvien;
+//    }
 }

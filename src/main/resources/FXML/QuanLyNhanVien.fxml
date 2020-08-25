@@ -57,7 +57,7 @@
                         <PasswordField fx:id="matKhauMoiTextField" promptText="Mật khẩu mới" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <Label text="Nhập lại mật khẩu mới : " GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <PasswordField fx:id="matKhauMoi2TextField" promptText="Nhập lại mật khẩu mới" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Button fx:id="updatePwButton" mnemonicParsing="false" onAction="#updatePassword" text="Cập nhật mật khẩu" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Button fx:id="updatePwButton" disable="true" mnemonicParsing="false" onAction="#updatePassword" text="Cập nhật mật khẩu" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                         <Label fx:id="changePwMsgLabel" text="Chọn một nhân viên" textFill="DARKORANGE" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
@@ -105,7 +105,7 @@
                         <PasswordField fx:id="newMatKhauPwField" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                         <Label text="Xác nhận mật khẩu : " GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <PasswordField fx:id="newMatKhau2PwField" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                        <Label fx:id="newAccountInfoStatusLabel" text="Mời điền đủ thông tin" textFill="DARKORANGE" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                        <Label fx:id="newAccountInfoStatusLabel" text="Mời điền đủ thông tin" textFill="DARKORANGE" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>

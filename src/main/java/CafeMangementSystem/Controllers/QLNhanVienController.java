@@ -33,6 +33,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class QLNhanVienController implements Initializable {
@@ -124,8 +125,8 @@ public class QLNhanVienController implements Initializable {
     @FXML
     private Button createAccountButton;
 
-    @FXML
-    private Label newAccountInfoStatusLabel;
+//    @FXML
+//    private Label newAccountInfoStatusLabel;
 
     @FXML
     private Label tenChuQuanLabel;
@@ -155,7 +156,6 @@ public class QLNhanVienController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        tenChuQuanLabel.setText(SessionUser.getInstance().getNhanvien().getTennv());
         initEmpTable();
     }
 
@@ -195,12 +195,12 @@ public class QLNhanVienController implements Initializable {
                 changePwMsgLabel.setTextFill(Color.DARKORANGE);
             } else {
                 boolean changePwStatus = validateConfirmPw(matKhauMoi2TextField.getText(), newValue);
-                if (changePwStatus) {
+                if (!changePwStatus) {
+                    changePwMsgLabel.setTextFill(Color.RED);
+                } else {
                     // Hợp lệ
                     changePwMsgLabel.setText("Mật khẩu hợp lệ");
                     changePwMsgLabel.setTextFill(Color.GREEN);
-                } else {
-                    changePwMsgLabel.setTextFill(Color.RED);
                 }
                 updatePwButton.setDisable(!changePwStatus);
             }
@@ -211,12 +211,12 @@ public class QLNhanVienController implements Initializable {
                 changePwMsgLabel.setTextFill(Color.DARKORANGE);
             } else {
                 boolean changePwStatus = validateConfirmPw(matKhauMoiTextField.getText(), newValue);
-                if (changePwStatus) {
+                if (!changePwStatus) {
+                    changePwMsgLabel.setTextFill(Color.RED);
+                } else {
                     // Hợp lệ
                     changePwMsgLabel.setText("Mật khẩu hợp lệ");
                     changePwMsgLabel.setTextFill(Color.GREEN);
-                } else {
-                    changePwMsgLabel.setTextFill(Color.RED);
                 }
                 updatePwButton.setDisable(!changePwStatus);
             }
@@ -501,68 +501,97 @@ public class QLNhanVienController implements Initializable {
 
     @FXML
     private void createAccount(ActionEvent actionEvent) {
-        // Tạo đối tượng nhân viên mới
-        Nhanvien newNhanvien;
-
+        String tenNv = newTenNvTextField.getText();
         // cast java.util.Date -> java.sql.Date
-        java.util.Date date =
-                java.util.Date.from(newNgaySinhDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date newNgaySinh = new Date(date.getTime());
+        java.util.Date date = java.util.Date.from(newNgaySinhDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date ngaySinh = new Date(date.getTime());
+        String dienThoai = newDientThoaiTextField.getText();
+        String diacChi = newDiaChiTextField.getText();
+        String tenDangNhap = newTenDangNhapTextField.getText();
+        String matKhau = newMatKhauPwField.getText();
+        String chucVu = newChucVuComboBox.getSelectionModel().getSelectedItem().getName();
 
+        if (validateNewNhanvienInfo(tenNv, ngaySinh, dienThoai, diacChi, tenDangNhap, matKhau, chucVu)) {
+            // Thêm dialog xác nhận về việc thêm các thông tin trên
+            boolean confirm = Utilities.getInstance().showAlert(Alert.AlertType.CONFIRMATION,
+                    quanLyNhanVienGridPane.getScene().getWindow(),
+                    "Xác nhận thêm nhân viên", "Bạn chắc chắn muốn thêm nhân viên với những thông tin trên?\n");
 
-        // Hash password
-        String hashedPassword = BCrypt.hashpw(newMatKhauPwField.getText(), BCrypt.gensalt(10));
+            if (!confirm) { return; }
 
-        // Create new account for new employee
-        newNhanvien = new Nhanvien(
-                NhanvienDAO.getInstance().getMaxId() + 1,
-                newTenNvTextField.getText(),
-                newNgaySinh,
-                newDientThoaiTextField.getText(),
-                newDiaChiTextField.getText(),
-                newTenDangNhapTextField.getText(),
-                hashedPassword,
-                newChucVuComboBox.getSelectionModel().getSelectedItem().getName(),
-                true // default is "active"
-        );
+            // Hash password
+            String hashedPassword = BCrypt.hashpw(matKhau, BCrypt.gensalt(10));
 
-        // Thêm dialog xác nhận về việc thêm các thông tin trên
-        boolean confirm = Utilities.getInstance().showAlert(Alert.AlertType.CONFIRMATION,
-                quanLyNhanVienGridPane.getScene().getWindow(),
-                "Xác nhận thêm nhân viên", "Bạn chắc chắn muốn thêm nhân viên này?\n" + newNhanvien);
+            // Create a new employee
+            Nhanvien newNhanvien = new Nhanvien(
+                    NhanvienDAO.getInstance().getMaxId() + 1,
+                    newTenNvTextField.getText(),
+                    ngaySinh,
+                    newDientThoaiTextField.getText(),
+                    newDiaChiTextField.getText(),
+                    newTenDangNhapTextField.getText(),
+                    hashedPassword,
+                    newChucVuComboBox.getSelectionModel().getSelectedItem().getName(),
+                    true // default is "active"
+            );
 
-        if (!confirm) { return; }
+            if (NhanvienDAO.getInstance().insert(newNhanvien)) {
+                // Successfully
+//                newAccountInfoStatusLabel.setText("Tạo thành công");
+//                newAccountInfoStatusLabel.setTextFill(Color.GREEN);
+                Utilities.getInstance().showAlert(Alert.AlertType.INFORMATION,
+                        this.getRoot().getScene().getWindow(), "Thành công",
+                        "Nhân viên " + newNhanvien.getTennv() +
+                                " (Mã nhân viên: " + newNhanvien.getManv() + ") đã được thêm vào danh sách!");
 
-//        if (NhanvienDAO.getInstance().get(newNhanvien.getTendangnhap()) != null) {
-//            System.out.println("Tên đăng nhập đã tồn tại");
-//            Utilities.getInstance().showAlert(Alert.AlertType.ERROR,quanLyNhanVienGridPane.getScene().getWindow(),
-//                    "Không thành công", "Tên đăng nhập đã tồn tại");
-//            return;
-//        }
-
-        boolean inserted = NhanvienDAO.getInstance().insert(newNhanvien);
-
-        if (inserted) {
-            // Successfully
-            newAccountInfoStatusLabel.setText("Tạo thành công");
-            newAccountInfoStatusLabel.setTextFill(Color.GREEN);
-
-            // Cập nhật view lên table
-            nhanvienObservableList.add(newNhanvien);
+                // Cập nhật view lên table
+                nhanvienObservableList.add(newNhanvien);
+            } else {
+//                newAccountInfoStatusLabel.setText("Tạo thất bại");
+//                newAccountInfoStatusLabel.setTextFill(Color.RED);
+                Utilities.getInstance().showAlert(Alert.AlertType.ERROR,
+                        this.getRoot().getScene().getWindow(), "Thất bại",
+                        "Không thể thêm nhân viên này! Xin hãy kiểm tra lại!");
+            }
         } else {
-            newAccountInfoStatusLabel.setText("Tạo thất bại");
-            newAccountInfoStatusLabel.setTextFill(Color.RED);
+            System.out.println("Thông tin nhập vào chưa hợp lệ để tạo tài khoản!");
         }
     }
 
-    private boolean validateConfirmPw(String newPw, String confirmNewPw) {
-        // Độ dài < 6, chứa kí tự abc ,....
-//        if (newPw.length() < 6) {
-//            return false;
-//        }
+    private boolean validateNewNhanvienInfo(String tenNv, Date ngaySinh, String dienThoai, String diaChi,
+                                         String tenDangNhap, String matKhau, String chucVu) {
+        for (Nhanvien nv : nhanvienObservableList) {
+            if (nv.getTendangnhap().equals(tenDangNhap)) {
+                Utilities.getInstance().showAlert(Alert.AlertType.ERROR, this.getRoot().getScene().getWindow(), "Thông tin không hợp lệ", "Tên đăng nhập đã tồn tại");
+                return false;
+            }
+        }
+        if (dienThoai.trim().length() < 10) {
+            Utilities.getInstance().showAlert(Alert.AlertType.ERROR, this.getRoot().getScene().getWindow(), "Thông tin không hợp lệ", "Số điện thoại không hợp lệ");
+            return false;
+        }
+        if (!tenDangNhap.trim().matches("^[A-z_](\\w|\\.|_){5,32}$")) {
+            Utilities.getInstance().showAlert(Alert.AlertType.ERROR, this.getRoot().getScene().getWindow(), "Thông tin không hợp lệ", "Tên đăng nhập phải có ít nhất 6 ký tự" +
+                    "\nKhông bắt đầu bằng số" +
+                    "\nĐược phép chứa ký tự \"_\"" +
+                    "\nKhông chứa các ký tự đặc biệt khác như !,@,#,$,%,^,&,*,(,),-,+, ...");
+            return false;
+        }
+        if (matKhau.trim().length() < 6) {
+            Utilities.getInstance().showAlert(Alert.AlertType.ERROR, this.getRoot().getScene().getWindow(), "Thông tin không hợp lệ", "Mật khẩu phải có ít nhất 6 ký tự");
+            return false;
+        }
+        return true;
+    }
 
+
+    private boolean validateConfirmPw(String newPw, String confirmNewPw) {
         if (newPw.trim().isEmpty() || confirmNewPw.trim().isEmpty()) {
             changePwMsgLabel.setText("Chưa điền đủ các thông tin");
+            return false;
+        }
+        if (newPw.trim().length() < 6) {
+            changePwMsgLabel.setText("Mật khẩu phải chứa ít nhất 6 ký tự");
             return false;
         }
         // Xác nhận lại mật khẩu phải trùng
@@ -579,7 +608,7 @@ public class QLNhanVienController implements Initializable {
             Nhanvien selectedNhanvien = nhanvienTableView.getSelectionModel().getSelectedItem();
 
             boolean confirm = Utilities.getInstance().showAlert(Alert.AlertType.CONFIRMATION,
-                    quanLyNhanVienGridPane.getScene().getWindow(), "Xác nhận", "Xác nhận đổi mật khẩu?" );
+                    quanLyNhanVienGridPane.getScene().getWindow(), "Xác nhận", "Xác nhận đổi mật khẩu?");
             if (!confirm) {
                 return;
             }
@@ -587,17 +616,20 @@ public class QLNhanVienController implements Initializable {
             String hashedPassword = BCrypt.hashpw(matKhauMoi2TextField.getText(), BCrypt.gensalt(10));
             selectedNhanvien.setMatkhau(hashedPassword);
 
-            boolean updated = NhanvienDAO.getInstance().update(selectedNhanvien.getManv(),selectedNhanvien);
+            boolean updated = NhanvienDAO.getInstance().update(selectedNhanvien.getManv(), selectedNhanvien);
 
             if (updated) {
                 System.out.println("Cập nhật mật khẩu thành công");
                 Utilities.getInstance().showAlert(Alert.AlertType.INFORMATION,
-                        quanLyNhanVienGridPane.getScene().getWindow(), "Thông báo", "Đổi mật khẩu thành công!" );
+                        quanLyNhanVienGridPane.getScene().getWindow(), "Thông báo", "Đổi mật khẩu thành công!");
             } else {
                 System.out.println("Cập nhật mật khẩu thất bại");
                 Utilities.getInstance().showAlert(Alert.AlertType.INFORMATION,
-                        quanLyNhanVienGridPane.getScene().getWindow(), "Thông báo", "Đổi mật khẩu thất bại!" );
+                        quanLyNhanVienGridPane.getScene().getWindow(), "Thông báo", "Đổi mật khẩu thất bại!");
             }
+        } else {
+            Utilities.getInstance().showAlert(Alert.AlertType.ERROR, this.getRoot().getScene().getWindow(),
+                    "Lỗi", "Tên đăng nhập không được bỏ trống!");
         }
     }
 

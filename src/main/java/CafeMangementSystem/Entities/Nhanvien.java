@@ -7,6 +7,7 @@ import java.util.Collection;
 
 
 @Entity
+@Table(name = "nhanvien", uniqueConstraints = { @UniqueConstraint(columnNames = { "tendangnhap" }) })
 public class Nhanvien {
     private Integer manv;
     private String tennv;
