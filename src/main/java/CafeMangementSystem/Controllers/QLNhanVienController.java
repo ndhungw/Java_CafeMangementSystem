@@ -664,6 +664,8 @@ public class QLNhanVienController implements Initializable {
         searchEmpTextField.clear();
 
         nhanvienTableView.getSelectionModel().clearSelection();
+        // Hiển thị các dòng dữ liệu
+        nhanvienTableView.setItems(nhanvienObservableList);
 
         tenDangNhapTextField.clear();
         matKhauMoiTextField.clear();
