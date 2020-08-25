@@ -13,15 +13,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-//        HibernateUtils.getSessionFactory();
-//        FXMLLoader loader = new FXMLLoader();
-//        Parent root = loader.load(getClass().getResource("/FXML/QuanLyMonAn.fxml"));
-//        Scene scene = new Scene(root);
-//        scene.getStylesheets().add("global.css");
-//        stage.setScene(scene);
-//        stage.setResizable(false);
-//        stage.show();
-
         HibernateUtils.getSessionFactory();
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResource("/FXML/Login.fxml"));

@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import jdk.jshell.execution.Util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -129,19 +130,24 @@ public class ThongKeControllers implements Initializable {
     }
 
     public void reload(ActionEvent actionEvent) {
-        if (!fromDayDatePicker.getValue().toString().isEmpty()) {
-            if (!toDayDatePicker.getValue().toString().isEmpty()) {
-                LocalDateTime fromDate = LocalDateTime.from(fromDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
-                LocalDateTime toDate = LocalDateTime.from(toDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
-
-                ObservableList<Hoadon> contextHoaDonList = FXCollections.observableList(HoadonDAO.getInstance().getAll(fromDate, toDate));
-                System.out.println("Danh sách hóa đơn từ ngày &&& đến ngày &&&:");
-                for (Hoadon hoadon : contextHoaDonList) {
-                    System.out.println(hoadon);
-                }
-                hoadonTableView.setItems(contextHoaDonList);
-            }
+        if (fromDayDatePicker.getValue() == null || fromDayDatePicker.getValue().toString().isEmpty()) {
+            Utilities.getInstance().showAlert(Alert.AlertType.ERROR, root.getScene().getWindow(), "Xảy ra lỗi", "Bạn chưa chọn ngày bắt đầu");
+        } else if (toDayDatePicker.getValue() == null || toDayDatePicker.getValue().toString().isEmpty()) {
+            Utilities.getInstance().showAlert(Alert.AlertType.ERROR, root.getScene().getWindow(), "Xảy ra lỗi", "Bạn chưa chọn ngày kết thúc");
+            return;
         }
+
+        totalRevenueTextField.setText("0");
+
+        LocalDateTime fromDate = LocalDateTime.from(fromDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
+        LocalDateTime toDate = LocalDateTime.from(toDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
+
+        ObservableList<Hoadon> contextHoaDonList = FXCollections.observableList(HoadonDAO.getInstance().getAll(fromDate, toDate));
+        System.out.println("Danh sách hóa đơn từ ngày " + fromDate + " đến ngày " + toDate + ":");
+        for (Hoadon hoadon : contextHoaDonList) {
+            System.out.println(hoadon);
+        }
+        hoadonTableView.setItems(contextHoaDonList);
     }
 
     @FXML
