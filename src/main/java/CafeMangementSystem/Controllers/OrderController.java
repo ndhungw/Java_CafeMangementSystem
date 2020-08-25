@@ -366,6 +366,11 @@ public class OrderController implements Initializable {
             createBillButton.setDisable(true);
             billTableView.setDisable(true);
             menuTilePane.setDisable(true);
+
+            Utilities.getInstance().showAlert(Alert.AlertType.INFORMATION, orderRoot.getScene().getWindow(), "Thành công", "Ghi nhận hóa đơn thành công!");
+        } else {
+            Utilities.getInstance().showAlert(Alert.AlertType.ERROR, orderRoot.getScene().getWindow(), "Thất bại", "Ghi nhận hóa đơn không thành công.");
+            System.out.println("Có lỗi trong quá trình ghi lên cơ sở dữ liệu");
         }
     }
 
