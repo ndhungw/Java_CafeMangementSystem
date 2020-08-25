@@ -137,16 +137,18 @@ public class ThongKeControllers implements Initializable {
             return;
         }
 
-        totalRevenueTextField.setText("0");
-
         LocalDateTime fromDate = LocalDateTime.from(fromDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
         LocalDateTime toDate = LocalDateTime.from(toDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
 
         ObservableList<Hoadon> contextHoaDonList = FXCollections.observableList(HoadonDAO.getInstance().getAll(fromDate, toDate));
+        BigDecimal totalRevenue = new BigDecimal(0);
         System.out.println("Danh sách hóa đơn từ ngày " + fromDate + " đến ngày " + toDate + ":");
+
         for (Hoadon hoadon : contextHoaDonList) {
-            System.out.println(hoadon);
+            totalRevenue = totalRevenue.add(hoadon.getThanhtien());
         }
+
+        totalRevenueTextField.setText(totalRevenue.toString());
         hoadonTableView.setItems(contextHoaDonList);
     }
 
