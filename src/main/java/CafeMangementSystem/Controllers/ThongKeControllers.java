@@ -21,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
@@ -130,10 +131,10 @@ public class ThongKeControllers implements Initializable {
     public void reload(ActionEvent actionEvent) {
         if (!fromDayDatePicker.getValue().toString().isEmpty()) {
             if (!toDayDatePicker.getValue().toString().isEmpty()) {
-                Date fromDay = Date.valueOf(fromDayDatePicker.getValue());
-                Date toDay = Date.valueOf(toDayDatePicker.getValue());
+                LocalDateTime fromDate = LocalDateTime.from(fromDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
+                LocalDateTime toDate = LocalDateTime.from(toDayDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
 
-                ObservableList<Hoadon> contextHoaDonList = FXCollections.observableList(HoadonDAO.getInstance().getAll(fromDay, toDay));
+                ObservableList<Hoadon> contextHoaDonList = FXCollections.observableList(HoadonDAO.getInstance().getAll(fromDate, toDate));
                 System.out.println("Danh sách hóa đơn từ ngày &&& đến ngày &&&:");
                 for (Hoadon hoadon : contextHoaDonList) {
                     System.out.println(hoadon);

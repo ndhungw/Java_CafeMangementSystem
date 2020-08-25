@@ -142,7 +142,7 @@ public class HoadonDAO implements DAO<Hoadon> {
         return false;
     }
 
-    public List<Hoadon> getAll(LocalDateTime fromDay, LocalDateTime toDay) {
+    public List<Hoadon> getAll(LocalDateTime fromDate, LocalDateTime toDate) {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();
         List<Hoadon> hoadonList = null;
 
@@ -152,8 +152,8 @@ public class HoadonDAO implements DAO<Hoadon> {
             String sql = "select hd from " + Hoadon.class.getName() + " hd" +
                     " where :fromDay <=  hd.ngaygiaodich and hd.ngaygiaodich <= :toDay";
             Query<Hoadon> query = session.createQuery(sql);
-            query.setParameter("fromDay",fromDay);
-            query.setParameter("toDay",toDay);
+            query.setParameter("fromDay",fromDate);
+            query.setParameter("toDay",toDate);
             hoadonList = query.getResultList();
 
             session.getTransaction().commit();
