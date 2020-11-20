@@ -312,6 +312,7 @@ public class OrderController implements Initializable {
         billTableView.getItems().clear();
         tempPriceTextField.clear();
         discountSpinner.getEditor().clear();
+        discountSpinner.getEditor().setText(String.valueOf(0));
         totalPriceTextField.clear();
         receivedAmountTextField.clear();
 
